@@ -119,3 +119,4 @@ ul.glance .m { color: var(--muted); font-variant-numeric: tabular-nums; }
 footer { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--line); }
 footer h2 { margin-top: 0; }
 footer p { color: var(--muted); max-width: 65ch; }
+.signup .btn { justify-self: start; }

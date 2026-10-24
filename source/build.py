@@ -98,7 +98,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
 <main class="wrap">
   <div class="signup">
     <h3>Get it in your inbox every Wednesday</h3>
-    <form id="signup" action="https://brenhameveryday.beehiiv.com/subscribe" method="get" target="_blank"><input id="email" name="email" type="email" required placeholder="you@example.com" aria-label="Email address"><button type="submit">Sign me up</button></form>
+    <a class="btn" href="https://brenhameveryday.beehiiv.com/subscribe" target="_blank" rel="noopener">Sign me up</a>
     <small id="signupmsg">Free. One email a week. Unsubscribe anytime.</small>
   </div>
 {body}
