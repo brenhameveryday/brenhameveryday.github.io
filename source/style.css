@@ -120,3 +120,9 @@ footer { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--line);
 footer h2 { margin-top: 0; }
 footer p { color: var(--muted); max-width: 65ch; }
 .signup .btn { justify-self: start; }
+.about-photo { margin: 22px 0; }
+.about-photo img { display: block; width: 100%; max-width: 640px; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 14px; }
+.about-photo figcaption { font-size: 14px; color: var(--muted); margin-top: 6px; font-style: italic; }
+.about-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 640px; margin: 22px 0; }
+.about-pair img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 14px; display: block; }
+.intro h3 { font: 800 20px/1.3 var(--display); margin: 28px 0 8px; }

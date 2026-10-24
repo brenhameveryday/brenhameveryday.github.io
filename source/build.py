@@ -155,6 +155,8 @@ def main():
         shutil.rmtree(OUT)
     os.makedirs(OUT)
     shutil.copy(os.path.join(ROOT, "style.css"), OUT)
+    if os.path.isdir(os.path.join(ROOT, "img")):
+        shutil.copytree(os.path.join(ROOT, "img"), os.path.join(OUT, "img"))
     open(os.path.join(OUT, "CNAME"), "w").write(DOMAIN + "\n")
     open(os.path.join(OUT, ".nojekyll"), "w").write("")
     for i in issues:
