@@ -56,7 +56,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
         status = f'<span class="status" id="status">This weekend</span><strong>{html.escape(current["range"])}</strong>'
         issue_line = f'<div class="issue"><span class="chip-dark">{html.escape(current["title"])}</span><span>Sent {html.escape(current["sent"])}</span><span>·</span><span>{current["picks"]} picks</span></div>'
     else:
-        status = '<strong>About Brenham Every Day</strong>'
+        status = f'<strong>{html.escape(title)}</strong>'
         issue_line = ""
     banner = '<div class="preview">Preview. This issue isn\'t published yet.</div>' if preview else ""
     return f"""<!doctype html>
@@ -84,6 +84,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
         <label class="sr" for="issuepick">Pick an issue</label>
         <select id="issuepick" onchange="location.href=this.value">{''.join(opts)}</select>
         {specials}
+        <a href="{prefix}scorecard/index.html">Scorecard</a>
         <a href="{prefix}about/index.html">About</a>
         <a href="https://www.instagram.com/brenhameveryday/" target="_blank" rel="noopener" aria-label="Instagram">{IG_ICON}</a>
         <a href="{FB_URL}" target="_blank" rel="noopener" aria-label="Facebook">{FB_ICON}</a>
@@ -183,6 +184,10 @@ def main():
     os.makedirs(os.path.join(OUT, "about"))
     open(os.path.join(OUT, "about", "index.html"), "w", encoding="utf-8").write(
         page("About Brenham Every Day", "Who we are and why we do this.", "../", about, issues))
+    score = open(os.path.join(ROOT, "scorecard.html"), encoding="utf-8").read()
+    os.makedirs(os.path.join(OUT, "scorecard"))
+    open(os.path.join(OUT, "scorecard", "index.html"), "w", encoding="utf-8").write(
+        page("Kid Approved Scorecard", "The most family-friendly spots around Brenham, checked by real parents.", "../", score, issues))
     print("built", [i["slug"] + (" (draft)" if i["draft"] else "") for i in issues], "newest:", newest["slug"])
 
 
