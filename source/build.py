@@ -21,6 +21,8 @@ FOOT_SYMBOL = """<svg width="0" height="0" style="position:absolute" aria-hidden
   <symbol id="foot" viewBox="0 0 40 50"><ellipse cx="21" cy="33" rx="11" ry="15"/><ellipse cx="10.5" cy="12" rx="4.2" ry="5.2"/><ellipse cx="18.5" cy="8" rx="3.4" ry="4.2"/><ellipse cx="25.5" cy="8.5" rx="3" ry="3.7"/><ellipse cx="31" cy="11.5" rx="2.6" ry="3.2"/><ellipse cx="35" cy="16" rx="2.2" ry="2.7"/></symbol>
 </svg>"""
 
+FB_URL = 'https://www.facebook.com/share/19rUeAqB4Z/'
+FB_ICON = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M15 8h-1.5A1.5 1.5 0 0 0 12 9.5V21M9.5 13H15" stroke-linecap="round"/></svg>'
 IG_ICON = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>'
 
 
@@ -42,7 +44,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
     """prefix is the relative path back to the site root ("" or "../")."""
     opts = []
     for i in reversed(issues):
-        label = i["label"] + (" (newest)" if i is issues_published(issues)[-1] else "") + (" (preview)" if i.get("draft") else "")
+        label = i["label"].rsplit(", ", 1)[0] + (" (newest)" if i is issues_published(issues)[-1] else "") + (" (preview)" if i.get("draft") else "")
         sel = " selected" if current is i else ""
         opts.append(f'<option value="{prefix}{i["slug"]}/index.html"{sel}>{html.escape(label)}</option>')
     specials = "".join(
@@ -84,6 +86,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
         {specials}
         <a href="{prefix}about/index.html">About</a>
         <a href="https://www.instagram.com/brenhameveryday/" target="_blank" rel="noopener" aria-label="Instagram">{IG_ICON}</a>
+        <a href="{FB_URL}" target="_blank" rel="noopener" aria-label="Facebook">{FB_ICON}</a>
       </nav>
       <p class="over" id="over" hidden></p>
     </div>
@@ -110,7 +113,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
       <small>Free. One email a week. Unsubscribe anytime.</small>
     </div>
     <p>We check every pick against the venue or event page before it goes out, but plans change, especially with Texas weather. Double-check before you load up the truck.</p>
-    <p>Covering Brenham and towns within about 30 miles, including Chappell Hill, Burton, Independence, Washington, Round Top, Bellville, Somerville, Hempstead and Navasota. Follow along on Instagram, <a href="https://www.instagram.com/brenhameveryday/" target="_blank" rel="noopener">@brenhameveryday</a>.</p>
+    <p>Covering Brenham and towns within about 30 miles, including Chappell Hill, Burton, Independence, Washington, Round Top, Bellville, Somerville, Hempstead and Navasota. Follow along on <a href="https://www.instagram.com/brenhameveryday/" target="_blank" rel="noopener">Instagram</a> and <a href="{FB_URL}" target="_blank" rel="noopener">Facebook</a>.</p>
     <p class="love">I love Brenham, yes I do. I love Brenham, how 'bout you?</p>
   </footer>
 </main>
