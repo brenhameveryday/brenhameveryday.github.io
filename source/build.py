@@ -84,7 +84,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
         <label class="sr" for="issuepick">Pick an issue</label>
         <select id="issuepick" onchange="location.href=this.value">{''.join(opts)}</select>
         {specials}
-        <a href="{prefix}scorecard/index.html">Scorecard</a>
+        <a href="{prefix}eat-with-kids/index.html">Eat with kids</a>
         <a href="{prefix}about/index.html">About</a>
         <a href="https://www.instagram.com/brenhameveryday/" target="_blank" rel="noopener" aria-label="Instagram">{IG_ICON}</a>
         <a href="{FB_URL}" target="_blank" rel="noopener" aria-label="Facebook">{FB_ICON}</a>
@@ -184,10 +184,13 @@ def main():
     os.makedirs(os.path.join(OUT, "about"))
     open(os.path.join(OUT, "about", "index.html"), "w", encoding="utf-8").write(
         page("About Brenham Every Day", "Who we are and why we do this.", "../", about, issues))
-    score = open(os.path.join(ROOT, "scorecard.html"), encoding="utf-8").read()
+    eat = open(os.path.join(ROOT, "eat-with-kids.html"), encoding="utf-8").read()
+    os.makedirs(os.path.join(OUT, "eat-with-kids"))
+    open(os.path.join(OUT, "eat-with-kids", "index.html"), "w", encoding="utf-8").write(
+        page("Where to Eat with Kids", "The most family-friendly spots around Brenham, checked by real parents.", "../", eat, issues))
     os.makedirs(os.path.join(OUT, "scorecard"))
     open(os.path.join(OUT, "scorecard", "index.html"), "w", encoding="utf-8").write(
-        page("Kid Approved Scorecard", "The most family-friendly spots around Brenham, checked by real parents.", "../", score, issues))
+        '<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=../eat-with-kids/"><link rel="canonical" href="../eat-with-kids/">')
     print("built", [i["slug"] + (" (draft)" if i["draft"] else "") for i in issues], "newest:", newest["slug"])
 
 
