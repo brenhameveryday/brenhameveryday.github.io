@@ -114,6 +114,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
     </div>
     <p>We check every pick against the venue or event page before it goes out, but plans change, especially with Texas weather. Double-check before you load up the truck.</p>
     <p>Covering Brenham and towns within about 30 miles, including Chappell Hill, Burton, Independence, Washington, Round Top, Bellville, Somerville, Hempstead and Navasota. Follow along on <a href="https://www.instagram.com/brenhameveryday/" target="_blank" rel="noopener">Instagram</a> and <a href="{FB_URL}" target="_blank" rel="noopener">Facebook</a>.</p>
+    <p>Hosting something? <a href="{prefix}send-your-event/index.html">Send us your event</a>.</p>
     <p class="love">I love Brenham, yes I do. I love Brenham, how 'bout you?</p>
   </footer>
 </main>
@@ -187,6 +188,10 @@ def main():
     os.makedirs(os.path.join(OUT, "eat-with-kids"))
     open(os.path.join(OUT, "eat-with-kids", "index.html"), "w", encoding="utf-8").write(
         page("Where to Eat with Kids", "The most family-friendly spots around Brenham, checked by real parents.", "../", eat, issues))
+    send = open(os.path.join(ROOT, "send-your-event.html"), encoding="utf-8").read()
+    os.makedirs(os.path.join(OUT, "send-your-event"))
+    open(os.path.join(OUT, "send-your-event", "index.html"), "w", encoding="utf-8").write(
+        page("Send Us Your Event", "Hosting something in or around Brenham? Tell us about it.", "../", send, issues))
     os.makedirs(os.path.join(OUT, "scorecard"))
     open(os.path.join(OUT, "scorecard", "index.html"), "w", encoding="utf-8").write(
         '<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=../eat-with-kids/"><link rel="canonical" href="../eat-with-kids/">')
