@@ -84,7 +84,6 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
         <label class="sr" for="issuepick">Pick an issue</label>
         <select id="issuepick" onchange="location.href=this.value">{''.join(opts)}</select>
         {specials}
-        <a href="{prefix}eat-with-kids/index.html">Eat with kids</a>
         <a href="{prefix}about/index.html">About</a>
         <a href="https://www.instagram.com/brenhameveryday/" target="_blank" rel="noopener" aria-label="Instagram">{IG_ICON}</a>
         <a href="{FB_URL}" target="_blank" rel="noopener" aria-label="Facebook">{FB_ICON}</a>
