@@ -1,5 +1,5 @@
 """The Brenham scene: water tower, courthouse, Main Street, trees, bluebonnet dots and fall pumpkins."""
-def scene(pumpkins=False):
+def scene(pumpkins=False, spooky=False):
     parts = ['<svg viewBox="0 0 1080 480" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">',
      '<path d="M0 330 C200 270 380 300 540 320 C720 340 880 280 1080 300 L1080 480 L0 480Z" fill="#8fbf8a"/>',
      # water tower
@@ -20,5 +20,19 @@ def scene(pumpkins=False):
     parts.append('<g fill="#3d5a94"><circle cx="100" cy="420" r="9"/><circle cx="120" cy="430" r="8"/><circle cx="260" cy="440" r="9"/><circle cx="420" cy="425" r="8"/><circle cx="440" cy="438" r="9"/><circle cx="620" cy="430" r="9"/><circle cx="800" cy="420" r="8"/><circle cx="820" cy="436" r="9"/><circle cx="980" cy="428" r="9"/></g>')
     if pumpkins:
         parts.append('<g fill="#e98a3a"><ellipse cx="560" cy="380" rx="26" ry="20"/><ellipse cx="610" cy="388" rx="20" ry="15"/><ellipse cx="900" cy="385" rx="24" ry="18"/></g>')
+    if spooky:
+        # moon and bats in the sky
+        parts.insert(1, '<circle cx="880" cy="90" r="48" fill="#f4ecdf" opacity=".95"/><circle cx="860" cy="78" r="8" fill="#e8d9c4"/><circle cx="895" cy="108" r="6" fill="#e8d9c4"/>')
+        bat = '<path transform="translate({x} {y}) scale({s})" d="M0 0 C6 -10 14 -10 18 -2 C20 -8 24 -8 26 -2 C30 -10 38 -10 44 0 C36 -3 30 2 26 6 L22 2 L18 6 C14 2 8 -3 0 0Z" fill="#1f2d4d"/>'
+        parts.append(''.join(bat.format(x=x, y=y, s=sc) for x, y, sc in [(300, 70, 1.1), (360, 40, .8), (720, 120, .9), (980, 160, .7), (60, 90, .8)]))
+        # glowing windows
+        parts.append('<g fill="#f2d07e" opacity=".9"><rect x="760" y="240" width="28" height="36"/><rect x="910" y="255" width="26" height="32"/><rect x="1012" y="230" width="28" height="36"/><rect x="460" y="200" width="22" height="40"/><rect x="618" y="265" width="22" height="40"/></g>')
+        # ghost peeking from behind the water tower
+        parts.append('<path d="M262 250 C262 215 300 215 300 250 L300 290 L293 283 L287 290 L281 283 L275 290 L269 283 L262 290Z" fill="#fff"/><circle cx="275" cy="248" r="3.5" fill="#1f2d4d"/><circle cx="288" cy="248" r="3.5" fill="#1f2d4d"/>')
+        # jack-o'-lanterns
+        jack = ('<g transform="translate({x} {y}) scale({s})"><rect x="-4" y="-30" width="8" height="12" rx="2" fill="#4f8a5b"/>'
+                '<ellipse cx="0" cy="0" rx="34" ry="26" fill="#e98a3a"/><path d="M-18 -8 l7 -10 l7 10Z M4 -8 l7 -10 l7 10Z" fill="#1f2d4d"/>'
+                '<path d="M-20 6 Q0 24 20 6 L14 8 L10 13 L5 9 L0 14 L-5 9 L-10 13 L-14 8Z" fill="#1f2d4d"/></g>')
+        parts.append(''.join(jack.format(x=x, y=y, s=sc) for x, y, sc in [(500, 395, 1.1), (570, 405, .8), (860, 400, 1), (180, 405, .85)]))
     parts.append('</svg>')
     return "".join(parts)

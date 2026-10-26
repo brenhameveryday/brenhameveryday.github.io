@@ -2,7 +2,7 @@
 
 Each file in issues/ is named YYYY-MM-DD.html (the weekend's first day) and starts with
 <!--meta {...} --> holding: start, end, label, range, sent, title, picks, publish_on,
-and optionally special (a nav button, e.g. "Halloween") and scene_pumpkins.
+and optionally special (a nav button, e.g. "Halloween"), scene_pumpkins and scene_spooky.
 
 Usage: python3 build.py [--drafts] [--today YYYY-MM-DD]
   --drafts  also include issues whose publish_on is after today (marked as previews)
@@ -40,7 +40,7 @@ def load_issues():
     return issues
 
 
-def page(title, description, prefix, body, issues, current=None, preview=False, pumpkins=False):
+def page(title, description, prefix, body, issues, current=None, preview=False, pumpkins=False, spooky=False):
     """prefix is the relative path back to the site root ("" or "../")."""
     opts = []
     for i in reversed(issues):
@@ -96,7 +96,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
       {issue_line}
     </header>
   </div>
-  <div class="scene">{scene(pumpkins=pumpkins)}</div>
+  <div class="scene">{scene(pumpkins=pumpkins, spooky=spooky)}</div>
 </div>
 <main class="wrap">
   <div class="signup">
@@ -174,11 +174,11 @@ def main():
         d = os.path.join(OUT, i["slug"])
         os.makedirs(d)
         open(os.path.join(d, "index.html"), "w", encoding="utf-8").write(
-            page(title, desc, "../", i["body"], issues, i, preview=i["draft"], pumpkins=i.get("scene_pumpkins", False)))
+            page(title, desc, "../", i["body"], issues, i, preview=i["draft"], pumpkins=i.get("scene_pumpkins", False), spooky=i.get("scene_spooky", False)))
     newest = issues_published(issues)[-1]
     open(os.path.join(OUT, "index.html"), "w", encoding="utf-8").write(
         page("Brenham Every Day", "Something to do in Brenham, TX and nearby towns, every weekend.", "", newest["body"],
-             issues, newest, preview=newest["draft"], pumpkins=newest.get("scene_pumpkins", False)))
+             issues, newest, preview=newest["draft"], pumpkins=newest.get("scene_pumpkins", False), spooky=newest.get("scene_spooky", False)))
     about = open(os.path.join(ROOT, "about.html"), encoding="utf-8").read()
     os.makedirs(os.path.join(OUT, "about"))
     open(os.path.join(OUT, "about", "index.html"), "w", encoding="utf-8").write(
