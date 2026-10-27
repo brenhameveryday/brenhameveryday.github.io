@@ -71,6 +71,7 @@ h3.day { font: 800 19px/1.2 var(--display); margin: 24px 0 2px; }
 
 .intro p { margin: 0 0 14px; max-width: 65ch; }
 .legend { display: grid; gap: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; margin-top: 20px; font-size: 15px; }
+.legend-title { margin: 0; font: 800 12px Montserrat, sans-serif; letter-spacing: 1.5px; text-transform: uppercase; color: var(--denim-ink); }
 .legend div { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
 
 .picks { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
