@@ -4,7 +4,8 @@ Each file in issues/ is named YYYY-MM-DD.html (the weekend's first day) and star
 <!--meta {...} --> holding: start, end, label, range, sent, title, picks, publish_on,
 and optionally special (a nav button, e.g. "Halloween"), scene_pumpkins and scene_spooky.
 
-Usage: python3 build.py [--drafts] [--today YYYY-MM-DD]
+Usage: python3 build.py [--drafts] [--today YYYY-MM-DD] [--spotlights]
+  --spotlights  build the Local Spotlights pages and show them in the nav (off until launch)
   --drafts  also include issues whose publish_on is after today (marked as previews)
 Output goes to public/: index.html (newest published issue), one folder per issue,
 about/index.html, style.css, CNAME.
@@ -40,6 +41,9 @@ def load_issues():
     return issues
 
 
+SHOW_SPOTLIGHTS = False
+
+
 def page(title, description, prefix, body, issues, current=None, preview=False, pumpkins=False, spooky=False):
     """prefix is the relative path back to the site root ("" or "../")."""
     opts = []
@@ -59,6 +63,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
         status = f'<strong>{html.escape(title)}</strong>'
         issue_line = ""
     banner = '<div class="preview">Preview. This issue isn\'t published yet.</div>' if preview else ""
+    spot_nav = f'<a href="{prefix}spotlights/index.html">Local spotlights</a>\n        ' if SHOW_SPOTLIGHTS else ""
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -91,7 +96,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
         <label class="sr" for="issuepick">Pick an issue</label>
         <select id="issuepick" onchange="location.href=this.value">{''.join(opts)}</select>
         {specials}
-        <a href="{prefix}about/index.html">About</a>
+        {spot_nav}<a href="{prefix}about/index.html">About</a>
         <a href="https://www.instagram.com/brenhameveryday/" target="_blank" rel="noopener" aria-label="Instagram">{IG_ICON}</a>
         <a href="{FB_URL}" target="_blank" rel="noopener" aria-label="Facebook">{FB_ICON}</a>
       </nav>
@@ -161,6 +166,8 @@ def issues_published(issues):
 def main():
     args = sys.argv[1:]
     drafts = "--drafts" in args
+    global SHOW_SPOTLIGHTS
+    SHOW_SPOTLIGHTS = "--spotlights" in args
     today = datetime.date.today().isoformat()
     if "--today" in args:
         today = args[args.index("--today") + 1]
@@ -173,7 +180,8 @@ def main():
     os.makedirs(OUT)
     shutil.copy(os.path.join(ROOT, "style.css"), OUT)
     if os.path.isdir(os.path.join(ROOT, "img")):
-        shutil.copytree(os.path.join(ROOT, "img"), os.path.join(OUT, "img"))
+        shutil.copytree(os.path.join(ROOT, "img"), os.path.join(OUT, "img"),
+                        ignore=None if SHOW_SPOTLIGHTS else shutil.ignore_patterns("spotlights"))
     open(os.path.join(OUT, "CNAME"), "w").write(DOMAIN + "\n")
     open(os.path.join(OUT, ".nojekyll"), "w").write("")
     for i in issues:
@@ -202,8 +210,41 @@ def main():
     os.makedirs(os.path.join(OUT, "scorecard"))
     open(os.path.join(OUT, "scorecard", "index.html"), "w", encoding="utf-8").write(
         '<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=../eat-with-kids/"><link rel="canonical" href="../eat-with-kids/">')
+    if SHOW_SPOTLIGHTS:
+        build_spotlights(issues)
     print("built", [i["slug"] + (" (draft)" if i["draft"] else "") for i in issues], "newest:", newest["slug"])
 
+
+
+def build_spotlights(issues):
+    """Local Spotlights: one page per spotlights/*.html (first line <!--spot {...} -->), plus a list page."""
+    src = os.path.join(ROOT, "spotlights")
+    spots = []
+    for f in sorted(os.listdir(src)):
+        if not f.endswith(".html"):
+            continue
+        raw = open(os.path.join(src, f), encoding="utf-8").read()
+        meta = json.loads(raw[raw.index("<!--spot") + 8:raw.index("-->")])
+        meta["body"] = raw[raw.index("-->") + 3:]
+        spots.append(meta)
+    os.makedirs(os.path.join(OUT, "spotlights"))
+    for sp in spots:
+        d = os.path.join(OUT, "spotlights", sp["slug"])
+        os.makedirs(d)
+        open(os.path.join(d, "index.html"), "w", encoding="utf-8").write(
+            page(f"{sp['name']}: Local Spotlight", sp["blurb"], "../../", sp["body"], issues))
+    cards = "".join(
+        f'<a class="spot-card" href="{sp["slug"]}/index.html"><img src="../img/spotlights/{sp["slug"].split("-")[0]}/{sp["thumb"]}" alt="" loading="lazy">'
+        f'<div><p class="kicker">{sp["town"]} · {sp["date"]}</p><h4>{sp["name"]}</h4><p>{sp["blurb"]}</p></div></a>'
+        for sp in reversed(spots))
+    body = ('<section class="intro"><h2 style="margin-top:40px">Local <span class="s">spotlights</span></h2>'
+            '<p>Every Thursday we shine a light on a small business, farm or maker around Brenham that we think you should know about. These are never ads, just places we love.</p>'
+            f'<div class="spot-list">{cards}</div>'
+            '<h3>Know a local business we should spotlight?</h3>'
+            '<p>Send us a message on <a href="https://ig.me/m/brenhameveryday" target="_blank" rel="noopener">Instagram</a> or '
+            '<a href="https://www.facebook.com/share/19rUeAqB4Z/" target="_blank" rel="noopener">Facebook</a>.</p></section>')
+    open(os.path.join(OUT, "spotlights", "index.html"), "w", encoding="utf-8").write(
+        page("Local Spotlights", "Small businesses, farms and makers around Brenham worth knowing.", "../", body, issues))
 
 if __name__ == "__main__":
     main()
