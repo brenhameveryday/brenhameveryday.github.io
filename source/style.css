@@ -120,6 +120,7 @@ ul.glance .m { color: var(--muted); font-variant-numeric: tabular-nums; }
 footer { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--line); }
 footer h2 { margin-top: 0; }
 footer p { color: var(--muted); max-width: 65ch; }
+footer .copy { font-size: 14px; margin-top: 18px; }
 .signup .btn { justify-self: start; }
 .about-photo { margin: 22px 0; }
 .about-photo img { display: block; width: 100%; max-width: 640px; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 14px; }

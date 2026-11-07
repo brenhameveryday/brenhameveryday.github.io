@@ -128,6 +128,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
     <p>Covering Brenham and towns within about 30 miles, including Chappell Hill, Burton, Independence, Washington, Round Top, Bellville, Somerville, Hempstead and Navasota. Follow along on <a href="https://www.instagram.com/brenhameveryday/" target="_blank" rel="noopener">Instagram</a> and <a href="{FB_URL}" target="_blank" rel="noopener">Facebook</a>.</p>
     <p>Hosting something? <a href="{prefix}send-your-event/index.html">Send us your event</a>.</p>
     <p class="love">I love Brenham, yes I do. I love Brenham, how 'bout you?</p>
+    <p class="copy">&copy; 2026 Brenham Every Day. All rights reserved.</p>
   </footer>
 </main>
 <script>
