@@ -1,0 +1,218 @@
+{
+ "updated": "2026-11-09T06:35:52+00:00",
+ "start": "2026-10-11",
+ "end": "2026-11-09",
+ "visits_30d": 465,
+ "visits_7d": 95,
+ "visits_prev_7d": 367,
+ "daily": [
+  {
+   "day": "2026-10-10",
+   "visits": 0
+  },
+  {
+   "day": "2026-10-11",
+   "visits": 0
+  },
+  {
+   "day": "2026-10-12",
+   "visits": 0
+  },
+  {
+   "day": "2026-10-13",
+   "visits": 0
+  },
+  {
+   "day": "2026-10-14",
+   "visits": 0
+  },
+  {
+   "day": "2026-10-15",
+   "visits": 0
+  },
+  {
+   "day": "2026-10-16",
+   "visits": 0
+  },
+  {
+   "day": "2026-10-17",
+   "visits": 0
+  },
+  {
+   "day": "2026-10-18",
+   "visits": 0
+  },
+  {
+   "day": "2026-10-19",
+   "visits": 0
+  },
+  {
+   "day": "2026-10-20",
+   "visits": 0
+  },
+  {
+   "day": "2026-10-21",
+   "visits": 0
+  },
+  {
+   "day": "2026-10-22",
+   "visits": 0
+  },
+  {
+   "day": "2026-10-23",
+   "visits": 0
+  },
+  {
+   "day": "2026-10-24",
+   "visits": 0
+  },
+  {
+   "day": "2026-10-25",
+   "visits": 0
+  },
+  {
+   "day": "2026-10-26",
+   "visits": 3
+  },
+  {
+   "day": "2026-10-27",
+   "visits": 42
+  },
+  {
+   "day": "2026-10-28",
+   "visits": 93
+  },
+  {
+   "day": "2026-10-29",
+   "visits": 49
+  },
+  {
+   "day": "2026-10-30",
+   "visits": 63
+  },
+  {
+   "day": "2026-10-31",
+   "visits": 81
+  },
+  {
+   "day": "2026-11-01",
+   "visits": 25
+  },
+  {
+   "day": "2026-11-02",
+   "visits": 14
+  },
+  {
+   "day": "2026-11-03",
+   "visits": 25
+  },
+  {
+   "day": "2026-11-04",
+   "visits": 15
+  },
+  {
+   "day": "2026-11-05",
+   "visits": 15
+  },
+  {
+   "day": "2026-11-06",
+   "visits": 28
+  },
+  {
+   "day": "2026-11-07",
+   "visits": 9
+  },
+  {
+   "day": "2026-11-08",
+   "visits": 3
+  },
+  {
+   "day": "2026-11-09",
+   "visits": 0
+  }
+ ],
+ "pages": [
+  {
+   "path": "/",
+   "title": "Brenham Every Day",
+   "visits": 430
+  },
+  {
+   "path": "/2026-10-29/index.html",
+   "title": "Brenham Every Day: Oct 29 to Nov 1, 2026",
+   "visits": 16
+  },
+  {
+   "path": "/about/index.html",
+   "title": "About Brenham Every Day",
+   "visits": 7
+  },
+  {
+   "path": "/2026-10-23/index.html",
+   "title": "Brenham Every Day: Oct 23 to 25, 2026",
+   "visits": 4
+  },
+  {
+   "path": "/?_bhlid=7d192641a5b810f73393de99941b1847e058314b",
+   "title": "Brenham Every Day",
+   "visits": 3
+  },
+  {
+   "path": "/send-your-event/index.html",
+   "title": "Send Us Your Event",
+   "visits": 3
+  },
+  {
+   "path": "/?_bhlid=391b9057c4c7c094be3ec12e590ef716bc4e97b4",
+   "title": "Brenham Every Day",
+   "visits": 1
+  },
+  {
+   "path": "/index.html",
+   "title": "Brenham Every Day",
+   "visits": 1
+  }
+ ],
+ "referrers": [
+  {
+   "name": "facebook.com",
+   "visits": 194
+  },
+  {
+   "name": "Direct / unknown",
+   "visits": 67
+  },
+  {
+   "name": "FB",
+   "visits": 53
+  },
+  {
+   "name": "brenhameveryday.com",
+   "visits": 42
+  },
+  {
+   "name": "www.facebook.com",
+   "visits": 39
+  },
+  {
+   "name": "ig",
+   "visits": 32
+  },
+  {
+   "name": "www.facebook.com",
+   "visits": 16
+  },
+  {
+   "name": "brenhameveryday.beehiiv.com",
+   "visits": 11
+  },
+  {
+   "name": "l.instagram.com",
+   "visits": 3
+  },
+  {
+   "name": "brenhameveryday.com/about/index.html",
+   "visits": 3
+  }
+ ]
+}
