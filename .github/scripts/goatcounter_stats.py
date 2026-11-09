@@ -51,7 +51,7 @@ def try_get(path, **params):
 
 hits = get("/stats/hits", limit=100, **rng)
 time.sleep(0.5)
-refs = try_get("/stats/toprefs", limit=10, **rng)
+refs = try_get("/stats/toprefs", limit=40, **rng)
 time.sleep(0.5)
 total = try_get("/stats/total", **rng)
 
@@ -66,13 +66,52 @@ else:
         for s in h.get("stats", []):
             day = s["day"][:10]
             by_day[day] = by_day.get(day, 0) + s.get("daily", 0)
-daily = [{"day": d, "visits": v} for d, v in sorted(by_day.items())]
+daily = [{"day": d, "visits": v} for d, v in sorted(by_day.items()) if d >= start.isoformat()]
 
 
 def window(end_offset, length=7):
     days = [(today - timedelta(days=end_offset + i)).isoformat() for i in range(length)]
     return sum(by_day.get(d, 0) for d in days)
 
+
+def source(name):
+    n = (name or "").lower()
+    if "facebook" in n or n in ("fb", "m.facebook.com"):
+        return "Facebook"
+    if "instagram" in n or n == "ig":
+        return "Instagram"
+    if "beehiiv" in n or "mail" in n or n == "email":
+        return "Email"
+    if "brenhameveryday.com" in n:
+        return None  # clicks from one page of the site to another
+    if not n:
+        return "Typed in or saved link"
+    if "google" in n or "bing" in n or "duckduckgo" in n:
+        return "Search"
+    return name
+
+
+sources = {}
+for r in refs.get("stats", []):
+    k = source(r.get("name"))
+    if k:
+        sources[k] = sources.get(k, 0) + r.get("count", 0)
+
+
+def clean_path(p):
+    p = (p or "/").split("?")[0]
+    if p.endswith("index.html"):
+        p = p[: -len("index.html")]
+    return p or "/"
+
+
+pages = {}
+for h in hits.get("hits", []):
+    if h.get("event"):
+        continue
+    k = clean_path(h.get("path"))
+    e = pages.setdefault(k, {"path": k, "title": h.get("title") or "", "visits": 0})
+    e["visits"] += h.get("count", 0)
 
 out = {
     "updated": datetime.now(timezone.utc).isoformat(timespec="seconds"),
@@ -82,14 +121,8 @@ out = {
     "visits_7d": window(0),
     "visits_prev_7d": window(7),
     "daily": daily,
-    "pages": [
-        {"path": h.get("path"), "title": h.get("title") or "", "visits": h.get("count", 0)}
-        for h in hits.get("hits", [])[:15] if not h.get("event")
-    ],
-    "referrers": [
-        {"name": r.get("name") or "Direct / unknown", "visits": r.get("count", 0)}
-        for r in refs.get("stats", [])
-    ],
+    "pages": sorted(pages.values(), key=lambda e: -e["visits"])[:12],
+    "sources": [{"name": k, "visits": v} for k, v in sorted(sources.items(), key=lambda kv: -kv[1])],
 }
 
 with open(OUT, "w") as f:
