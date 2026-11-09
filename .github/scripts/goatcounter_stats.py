@@ -41,15 +41,32 @@ today = date.today()
 start = today - timedelta(days=DAYS - 1)
 rng = {"start": f"{start}T00:00:00Z", "end": f"{today}T23:59:59Z"}
 
-total = get("/stats/total", **rng)
-time.sleep(0.5)
-hits = get("/stats/hits", limit=15, **rng)
-time.sleep(0.5)
-refs = get("/stats/toprefs", limit=10, **rng)
+def try_get(path, **params):
+    try:
+        return get(path, **params)
+    except Exception as e:  # keep going; the daily totals can come from hits
+        print(f"Skipping {path}: {e}", file=sys.stderr)
+        return {}
 
-daily = [{"day": s["day"], "visits": s.get("daily", 0)} for s in total.get("stats", [])]
-daily.sort(key=lambda d: d["day"])
-by_day = {d["day"]: d["visits"] for d in daily}
+
+hits = get("/stats/hits", limit=100, **rng)
+time.sleep(0.5)
+refs = try_get("/stats/toprefs", limit=10, **rng)
+time.sleep(0.5)
+total = try_get("/stats/total", **rng)
+
+by_day = {(start + timedelta(days=i)).isoformat(): 0 for i in range(DAYS)}
+if total.get("stats"):
+    for s in total["stats"]:
+        by_day[s["day"][:10]] = s.get("daily", 0)
+else:
+    for h in hits.get("hits", []):
+        if h.get("event"):
+            continue
+        for s in h.get("stats", []):
+            day = s["day"][:10]
+            by_day[day] = by_day.get(day, 0) + s.get("daily", 0)
+daily = [{"day": d, "visits": v} for d, v in sorted(by_day.items())]
 
 
 def window(end_offset, length=7):
@@ -61,13 +78,13 @@ out = {
     "updated": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     "start": start.isoformat(),
     "end": today.isoformat(),
-    "visits_30d": total.get("total", sum(by_day.values())),
+    "visits_30d": total.get("total") or sum(by_day.values()),
     "visits_7d": window(0),
     "visits_prev_7d": window(7),
     "daily": daily,
     "pages": [
         {"path": h.get("path"), "title": h.get("title") or "", "visits": h.get("count", 0)}
-        for h in hits.get("hits", []) if not h.get("event")
+        for h in hits.get("hits", [])[:15] if not h.get("event")
     ],
     "referrers": [
         {"name": r.get("name") or "Direct / unknown", "visits": r.get("count", 0)}
