@@ -7,9 +7,6 @@ on:
   schedule:
     - cron: "15 11 * * *"   # 5:15am Central (6:15am during daylight time)
   workflow_dispatch:
-  push:
-    branches: [claude/project-thread-t1jew5]
-    paths: [".github/workflows/goatcounter-stats.yml", ".github/scripts/goatcounter_stats.py"]
 
 permissions:
   contents: write
