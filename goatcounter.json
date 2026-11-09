@@ -1,15 +1,11 @@
 {
- "updated": "2026-11-09T06:35:52+00:00",
+ "updated": "2026-11-09T06:36:35+00:00",
  "start": "2026-10-11",
  "end": "2026-11-09",
  "visits_30d": 465,
  "visits_7d": 95,
  "visits_prev_7d": 367,
  "daily": [
-  {
-   "day": "2026-10-10",
-   "visits": 0
-  },
   {
    "day": "2026-10-11",
    "visits": 0
@@ -135,83 +131,48 @@
   {
    "path": "/",
    "title": "Brenham Every Day",
-   "visits": 430
+   "visits": 435
   },
   {
-   "path": "/2026-10-29/index.html",
+   "path": "/2026-10-29/",
    "title": "Brenham Every Day: Oct 29 to Nov 1, 2026",
    "visits": 16
   },
   {
-   "path": "/about/index.html",
+   "path": "/about/",
    "title": "About Brenham Every Day",
    "visits": 7
   },
   {
-   "path": "/2026-10-23/index.html",
+   "path": "/2026-10-23/",
    "title": "Brenham Every Day: Oct 23 to 25, 2026",
    "visits": 4
   },
   {
-   "path": "/?_bhlid=7d192641a5b810f73393de99941b1847e058314b",
-   "title": "Brenham Every Day",
-   "visits": 3
-  },
-  {
-   "path": "/send-your-event/index.html",
+   "path": "/send-your-event/",
    "title": "Send Us Your Event",
    "visits": 3
-  },
-  {
-   "path": "/?_bhlid=391b9057c4c7c094be3ec12e590ef716bc4e97b4",
-   "title": "Brenham Every Day",
-   "visits": 1
-  },
-  {
-   "path": "/index.html",
-   "title": "Brenham Every Day",
-   "visits": 1
   }
  ],
- "referrers": [
+ "sources": [
   {
-   "name": "facebook.com",
-   "visits": 194
+   "name": "Facebook",
+   "visits": 302
   },
   {
-   "name": "Direct / unknown",
+   "name": "Typed in or saved link",
    "visits": 67
   },
   {
-   "name": "FB",
-   "visits": 53
+   "name": "Instagram",
+   "visits": 35
   },
   {
-   "name": "brenhameveryday.com",
-   "visits": 42
-  },
-  {
-   "name": "www.facebook.com",
-   "visits": 39
-  },
-  {
-   "name": "ig",
-   "visits": 32
-  },
-  {
-   "name": "www.facebook.com",
-   "visits": 16
-  },
-  {
-   "name": "brenhameveryday.beehiiv.com",
+   "name": "Email",
    "visits": 11
   },
   {
-   "name": "l.instagram.com",
-   "visits": 3
-  },
-  {
-   "name": "brenhameveryday.com/about/index.html",
+   "name": "Search",
    "visits": 3
   }
  ]
