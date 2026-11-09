@@ -1,0 +1,40 @@
+name: Save website visit stats
+
+# Every morning, read visit numbers from GoatCounter and save them as
+# goatcounter.json on the "stats" branch (kept off main so the site
+# doesn't rebuild). The Brenham Every Day HQ dashboard reads that file.
+on:
+  schedule:
+    - cron: "15 11 * * *"   # 5:15am Central (6:15am during daylight time)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: goatcounter-stats
+  cancel-in-progress: false
+
+jobs:
+  stats:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch stats from GoatCounter
+        env:
+          GOATCOUNTER_TOKEN: ${{ secrets.GOATCOUNTER_TOKEN }}
+        run: python3 .github/scripts/goatcounter_stats.py "$RUNNER_TEMP/goatcounter.json"
+      - name: Save to the stats branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898299+github-actions[bot]@users.noreply.github.com"
+          if git fetch origin stats 2>/dev/null; then
+            git checkout -B stats origin/stats
+          else
+            git checkout --orphan stats
+            git rm -rfq .
+          fi
+          cp "$RUNNER_TEMP/goatcounter.json" goatcounter.json
+          git add goatcounter.json
+          git commit -qm "Website stats $(date -u +%F)" || echo "No change"
+          git push origin stats
