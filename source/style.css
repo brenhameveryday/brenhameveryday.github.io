@@ -150,3 +150,13 @@ footer .copy { font-size: 14px; margin-top: 18px; }
 .spot-card h4 { font: 900 22px/1.1 var(--display); margin: 2px 0 4px; }
 .spot-card p { margin: 0; }
 @media (max-width: 420px) { .spot-photos { grid-template-columns: 1fr; } }
+
+/* tap-to-filter chips (added 2026-11-10) */
+.filters { position: sticky; top: 0; z-index: 5; background: var(--bg); padding: 12px 0 10px; margin: 32px 0 8px; border-bottom: 1px solid var(--pink); }
+.filters-title { margin: 0 0 8px; font: 800 13px/1 var(--display); letter-spacing: .12em; text-transform: uppercase; color: var(--denim-ink); }
+.filters-row { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
+.filters-row::-webkit-scrollbar { display: none; }
+.filters button { flex: none; border: 2px solid var(--denim); background: #fff; color: var(--denim-ink); font: 700 14px/1 var(--body); padding: 9px 14px; border-radius: 999px; cursor: pointer; }
+.filters button[aria-pressed="true"] { background: var(--denim); color: #fff; }
+.filters-note { margin: 8px 0 0; font-size: 14px; color: var(--denim-ink); }
+[hidden] { display: none !important; }

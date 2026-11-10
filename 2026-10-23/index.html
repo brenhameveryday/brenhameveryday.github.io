@@ -260,6 +260,52 @@
   }
 })();
 </script>
+<script>
+(function () {
+  var cards = document.querySelectorAll("article.card[data-f]");
+  if (!cards.length) return;
+  var opts = [["all","All picks"],["kids","For kids"],["adults","For the adults"],["free","Free"],["outdoors","Outdoors"],["brenham","In Brenham"],["nearby","Nearby towns"]];
+  var have = {};
+  cards.forEach(function (c) { c.getAttribute("data-f").split(" ").forEach(function (t) { have[t] = 1; }); });
+  var bar = document.createElement("div");
+  bar.className = "filters"; bar.setAttribute("role", "group"); bar.setAttribute("aria-label", "Filter the picks");
+  bar.innerHTML = '<p class="filters-title">Show me</p>';
+  var row = document.createElement("div"); row.className = "filters-row"; bar.appendChild(row);
+  var note = document.createElement("p"); note.className = "filters-note"; note.hidden = true; bar.appendChild(note);
+  opts.forEach(function (o) {
+    if (o[0] !== "all" && !have[o[0]]) return;
+    var b = document.createElement("button"); b.type = "button"; b.textContent = o[1]; b.setAttribute("data-k", o[0]);
+    b.setAttribute("aria-pressed", o[0] === "all" ? "true" : "false");
+    b.addEventListener("click", function () { apply(o[0]); });
+    row.appendChild(b);
+  });
+  var first = document.getElementById("weekend") || cards[0];
+  first.parentNode.insertBefore(bar, first);
+  // group each section heading with what follows it, up to the next h2
+  var groups = [], g = null;
+  Array.prototype.forEach.call(document.querySelector("main").children, function (el) {
+    if (el.tagName === "H2") { g = { head: [el], cards: [] }; groups.push(g); return; }
+    if (!g) return;
+    if (el.matches("article.card[data-f]")) g.cards.push(el); else if (!g.cards.length) g.head.push(el);
+  });
+  function apply(k) {
+    row.querySelectorAll("button").forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-k") === k ? "true" : "false"); });
+    var shown = 0;
+    groups.forEach(function (gr) {
+      if (!gr.cards.length) return;
+      var n = 0;
+      gr.cards.forEach(function (c) {
+        var on = k === "all" || (" " + c.getAttribute("data-f") + " ").indexOf(" " + k + " ") > -1;
+        c.hidden = !on; if (on) n++;
+      });
+      gr.head.forEach(function (h) { if (!h.classList.contains("filters")) h.hidden = n === 0; });
+      shown += n;
+    });
+    note.hidden = k === "all";
+    note.textContent = k === "all" ? "" : shown + (shown === 1 ? " pick" : " picks") + " below. Tap All picks to see everything.";
+  }
+})();
+</script>
 <script data-goatcounter="https://brenhameveryday.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
