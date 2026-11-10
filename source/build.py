@@ -173,7 +173,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
     b.addEventListener("click", function () {{ apply(o[0]); }});
     row.appendChild(b);
   }});
-  var first = document.getElementById("weekend") || cards[0];
+  var first = document.getElementById("filters-here") || document.getElementById("weekend") || cards[0];
   first.parentNode.insertBefore(bar, first);
   // group each section heading with what follows it, up to the next h2
   var groups = [], g = null;
