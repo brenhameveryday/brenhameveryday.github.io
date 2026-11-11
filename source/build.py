@@ -96,6 +96,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
         <label class="sr" for="issuepick">Pick an issue</label>
         <select id="issuepick" onchange="location.href=this.value">{''.join(opts)}</select>
         {specials}
+        <a class="special" href="{prefix}christmas/index.html">Christmas</a>
         {spot_nav}<a href="{prefix}about/index.html">About</a>
         <a href="https://www.instagram.com/brenhameveryday/" target="_blank" rel="noopener" aria-label="Instagram">{IG_ICON}</a>
         <a href="{FB_URL}" target="_blank" rel="noopener" aria-label="Facebook">{FB_ICON}</a>
@@ -254,6 +255,10 @@ def main():
     os.makedirs(os.path.join(OUT, "send-your-event"))
     open(os.path.join(OUT, "send-your-event", "index.html"), "w", encoding="utf-8").write(
         page("Send Us Your Event", "Hosting something in or around Brenham? Tell us about it.", "../", send, issues))
+    xmas = open(os.path.join(ROOT, "christmas.html"), encoding="utf-8").read()
+    os.makedirs(os.path.join(OUT, "christmas"))
+    open(os.path.join(OUT, "christmas", "index.html"), "w", encoding="utf-8").write(
+        page("Christmas in Brenham", "Parades, Santa, lights and more in and around Brenham, TX this Christmas, day by day.", "../", xmas, issues))
     os.makedirs(os.path.join(OUT, "scorecard"))
     open(os.path.join(OUT, "scorecard", "index.html"), "w", encoding="utf-8").write(
         '<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=../eat-with-kids/"><link rel="canonical" href="../eat-with-kids/">')
