@@ -258,7 +258,7 @@ def main():
     xmas = open(os.path.join(ROOT, "christmas.html"), encoding="utf-8").read()
     os.makedirs(os.path.join(OUT, "christmas"))
     open(os.path.join(OUT, "christmas", "index.html"), "w", encoding="utf-8").write(
-        page("Christmas in Brenham", "Parades, Santa, lights and more in and around Brenham, TX this Christmas, day by day.", "../", xmas, issues))
+        page("Christmas Season in Brenham", "Every Christmas event in and around Brenham, TX, all in one place.", "../", xmas, issues))
     os.makedirs(os.path.join(OUT, "scorecard"))
     open(os.path.join(OUT, "scorecard", "index.html"), "w", encoding="utf-8").write(
         '<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=../eat-with-kids/"><link rel="canonical" href="../eat-with-kids/">')
