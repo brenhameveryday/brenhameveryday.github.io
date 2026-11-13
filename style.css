@@ -34,6 +34,7 @@ main.wrap { padding-block: 0 64px; }
 .topbar select { font: 700 15px var(--body); color: var(--on-denim); background: transparent; border: 1.5px solid rgba(255,255,255,.7); border-radius: 8px; padding: 8px 10px; max-width: 100%; }
 .topbar select option { color: var(--ink); }
 .topbar .special { background: var(--mint); color: var(--mint-ink); padding: 8px 12px; border-radius: 8px; }
+.topbar .special:hover, .topbar .special:active, .topbar .special:focus-visible, .topbar .special[aria-current="page"] { background: var(--pink); color: var(--ink); }
 .over { margin: 0; }
 .over a { color: var(--on-denim); font-weight: 700; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }

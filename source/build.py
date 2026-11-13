@@ -96,7 +96,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
         <label class="sr" for="issuepick">Pick an issue</label>
         <select id="issuepick" onchange="location.href=this.value">{''.join(opts)}</select>
         {specials}
-        <a class="special" href="{prefix}christmas/index.html">Christmas</a>
+        <a class="special" href="{prefix}christmas/index.html"{' aria-current="page"' if christmas else ''}>Christmas</a>
         {spot_nav}<a href="{prefix}about/index.html">About</a>
         <a href="https://www.instagram.com/brenhameveryday/" target="_blank" rel="noopener" aria-label="Instagram">{IG_ICON}</a>
         <a href="{FB_URL}" target="_blank" rel="noopener" aria-label="Facebook">{FB_ICON}</a>
