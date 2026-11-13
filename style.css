@@ -204,3 +204,6 @@ header.mast { position: relative; }
 .evonly { display: grid; gap: 14px; }
 .evonly[hidden] { display: none; }
 .evnote { margin: 0; font-weight: 400; color: var(--muted); }
+.contact-icons { display: flex; gap: 18px; margin: 4px 0 28px; }
+.contact-icons a { color: var(--denim); display: inline-flex; padding: 10px; border: 2px solid var(--line); border-radius: 12px; background: var(--surface); }
+.contact-icons a:hover { border-color: var(--denim); }
