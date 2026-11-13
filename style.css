@@ -34,7 +34,8 @@ main.wrap { padding-block: 0 64px; }
 .topbar select { font: 700 15px var(--body); color: var(--on-denim); background: transparent; border: 1.5px solid rgba(255,255,255,.7); border-radius: 8px; padding: 8px 10px; max-width: 100%; }
 .topbar select option { color: var(--ink); }
 .topbar .special { background: var(--mint); color: var(--mint-ink); padding: 8px 12px; border-radius: 8px; }
-.topbar .special:hover, .topbar .special:active, .topbar .special:focus-visible, .topbar .special[aria-current="page"] { background: var(--pink); color: var(--ink); }
+.topbar .special.xmas { background: #3f7a4c; color: #fff; }
+.topbar .special.xmas:hover, .topbar .special.xmas:active, .topbar .special.xmas:focus-visible, .topbar .special.xmas[aria-current="page"] { background: #d4483b; color: #fff; }
 .over { margin: 0; }
 .over a { color: var(--on-denim); font-weight: 700; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
@@ -179,3 +180,5 @@ h2.dayh .wxs { font: 600 14px/1.2 var(--body); color: var(--muted); letter-spaci
 .card.mini .more { display: grid; gap: 10px; padding: 0 14px 14px; border-top: 1px solid var(--line); padding-top: 12px; }
 .card.mini .more h4 { font-size: 20px; }
 .card.mini .rb.ka { background: var(--mint); color: var(--mint-ink); margin-left: 4px; }
+header.mast { position: relative; }
+.mast .sleigh { position: absolute; top: clamp(100px, 24vw, 150px); right: 0; width: clamp(150px, 44vw, 300px); height: auto; }

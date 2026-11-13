@@ -13,6 +13,7 @@ about/index.html, style.css, CNAME.
 import datetime, html, json, os, re, shutil, sys
 
 from scene import scene
+from sleigh import sleigh_svg
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(ROOT, "public")
@@ -96,7 +97,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
         <label class="sr" for="issuepick">Pick an issue</label>
         <select id="issuepick" onchange="location.href=this.value">{''.join(opts)}</select>
         {specials}
-        <a class="special" href="{prefix}christmas/index.html"{' aria-current="page"' if christmas else ''}>Christmas</a>
+        <a class="special xmas" href="{prefix}christmas/index.html"{' aria-current="page"' if christmas else ''}>Christmas</a>
         {spot_nav}<a href="{prefix}about/index.html">About</a>
         <a href="https://www.instagram.com/brenhameveryday/" target="_blank" rel="noopener" aria-label="Instagram">{IG_ICON}</a>
         <a href="{FB_URL}" target="_blank" rel="noopener" aria-label="Facebook">{FB_ICON}</a>
@@ -104,7 +105,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
       <p class="over" id="over" hidden></p>
     </div>
     <header class="mast">
-      <a class="logo" href="{prefix}index.html" aria-label="Brenham Every Day home"><span class="s top">every</span><span class="b">BRENHAM</span><span class="s bot">day</span></a>
+      <a class="logo" href="{prefix}index.html" aria-label="Brenham Every Day home"><span class="s top">every</span><span class="b">BRENHAM</span><span class="s bot">day</span></a>{sleigh_svg() if christmas else ''}
       <p class="sub">The best of what's happening this weekend in and around Brenham</p>
       {issue_line}
     </header>
