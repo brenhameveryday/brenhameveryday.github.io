@@ -3,18 +3,40 @@
     <h2 style="margin-top:40px">Send us <span class="s">your event</span></h2>
     <p>Hosting something fun in or around Brenham? We'd love to hear about it. Festivals, trunk or treats, fundraisers, story times, live music, the little church carnival nobody knows about yet. If it's happening within about 30 miles, send it our way.</p>
 
-    <h3>What to send</h3>
-    <ul>
-      <li>The name of the event and who's hosting</li>
-      <li>The date, start and end time</li>
-      <li>Where it is (the address helps)</li>
-      <li>What it costs, or that it's free</li>
-      <li>A line or two about what's going on, especially anything for the kids</li>
-      <li>A flyer, a link, or your Instagram handle so we can tag you</li>
-    </ul>
+    <h3>Tell us about it</h3>
+    <form class="evform" id="evform" action="https://formspree.io/f/FORMSPREE_ID" method="POST">
+      <input type="hidden" name="_subject" value="New event for Brenham Every Day">
+      <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <label>Event name<input name="Event" required></label>
+      <label>Who's hosting<input name="Host" required></label>
+      <div class="row2">
+        <label>Date<input name="Date" placeholder="Sat, Dec 5" required></label>
+        <label>Start and end time<input name="Time" placeholder="10am to 2pm"></label>
+      </div>
+      <label>Where is it? (the address helps)<input name="Where" required></label>
+      <label>What does it cost?<input name="Cost" placeholder="Free, $5 a person, kids free..."></label>
+      <label>What's going on? (anything for the kids?)<textarea name="Details" rows="4"></textarea></label>
+      <label>Link, flyer link or Instagram handle<input name="Link" placeholder="@yourbusiness or a link"></label>
+      <label>Your email (in case we have a question)<input type="email" name="email" required></label>
+      <button class="btn" type="submit">Send it our way</button>
+      <p class="evthanks" id="evthanks" hidden>Got it, thank you! We'll take a look and reach out if we have questions.</p>
+      <p class="everr" id="everr" hidden>Hmm, that didn't send. Try again, or message us below.</p>
+    </form>
+    <script>
+    (function () {
+      var f = document.getElementById("evform");
+      f.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var b = f.querySelector("button"); b.disabled = true; b.textContent = "Sending...";
+        fetch(f.action, { method: "POST", body: new FormData(f), headers: { Accept: "application/json" } })
+          .then(function (r) { if (!r.ok) throw 0; f.reset(); document.getElementById("evthanks").hidden = false; document.getElementById("everr").hidden = true; b.textContent = "Sent!"; })
+          .catch(function () { document.getElementById("everr").hidden = false; b.disabled = false; b.textContent = "Send it our way"; });
+      });
+    })();
+    </script>
 
-    <h3>How to send it</h3>
-    <p>Message us on Instagram or Facebook, whichever you like.</p>
+    <h3>Rather message us?</h3>
+    <p>That works too. Instagram or Facebook, whichever you like.</p>
     <p style="display:flex;gap:10px;flex-wrap:wrap">
       <a class="btn" href="https://ig.me/m/brenhameveryday" target="_blank" rel="noopener">Message us on Instagram</a>
       <a class="btn ghost" href="https://www.facebook.com/share/19rUeAqB4Z/" target="_blank" rel="noopener">Message us on Facebook</a>
