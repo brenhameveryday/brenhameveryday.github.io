@@ -48,10 +48,17 @@ SHOW_SPOTLIGHTS = False
 def page(title, description, prefix, body, issues, current=None, preview=False, pumpkins=False, spooky=False, christmas=False):
     """prefix is the relative path back to the site root ("" or "../")."""
     opts = []
+    newest_pub = issues_published(issues)[-1]
     for i in reversed(issues):
-        label = i["label"].rsplit(", ", 1)[0] + (" (newest)" if i is issues_published(issues)[-1] else "") + (" (preview)" if i.get("draft") else "")
-        sel = " selected" if current is i else ""
-        opts.append(f'<option value="{prefix}{i["slug"]}/index.html"{sel}>{html.escape(label)}</option>')
+        if i.get("draft") and current is not i:
+            continue
+        label = i["label"].rsplit(", ", 1)[0]
+        if i is newest_pub:
+            label = "Newest: " + label
+        if i.get("draft"):
+            label += " (preview)"
+        cur_attr = ' aria-current="page"' if current is i else ""
+        opts.append(f'<a href="{prefix}{i["slug"]}/index.html"{cur_attr}>{html.escape(label)}</a>')
     specials = "".join(
         f'<a class="special" href="{prefix}{i["slug"]}/index.html">{html.escape(i["special"])}</a>'
         for i in issues if i.get("special") and not i.get("past"))
@@ -84,7 +91,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&family=Sacramento&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
-<link rel="stylesheet" href="{prefix}style.css?v=20261113b">
+<link rel="stylesheet" href="{prefix}style.css?v=20261113c">
 </head>
 <body>
 {FOOT_SYMBOL}
@@ -94,8 +101,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
     <div class="topbar">
       <div class="when">{status}</div>
       <nav>
-        <label class="sr" for="issuepick">Pick an issue</label>
-        <select id="issuepick" onchange="location.href=this.value">{''.join(opts)}</select>
+        <details class="wkmenu"><summary>Weekends</summary><div class="wkdrop">{''.join(opts)}</div></details>
         {specials}
         <a class="special xmas" href="{prefix}christmas/index.html"{' aria-current="page"' if christmas else ''}>Christmas</a>
         {spot_nav}<a href="{prefix}about/index.html">About</a>
@@ -202,6 +208,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
   }}
 }})();
 </script>
+<script>document.addEventListener("click", function (e) {{ var m = document.querySelector(".wkmenu"); if (m && m.open && !m.contains(e.target)) m.open = false; }});</script>
 <script data-goatcounter="https://brenhameveryday.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>

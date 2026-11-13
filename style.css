@@ -192,3 +192,11 @@ header.mast { position: relative; }
 .evform button { justify-self: start; border: 0; cursor: pointer; font-size: 18px; }
 .evthanks { color: var(--mint-ink); font-weight: 700; }
 .everr { color: #b5524a; font-weight: 700; }
+.wkmenu { position: relative; }
+.wkmenu summary { list-style: none; cursor: pointer; font: 700 15px var(--body); color: var(--on-denim); border: 1.5px solid rgba(255,255,255,.7); border-radius: 8px; padding: 8px 12px; }
+.wkmenu summary::-webkit-details-marker { display: none; }
+.wkmenu summary::after { content: ""; display: inline-block; width: 7px; height: 7px; margin-left: 8px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: translateY(-3px) rotate(45deg); }
+.wkmenu[open] summary { background: #fff; color: var(--ink); }
+.wkdrop { position: absolute; z-index: 20; top: calc(100% + 6px); left: 0; min-width: 230px; background: #fff; border-radius: 10px; box-shadow: 0 8px 24px rgba(31,45,77,.25); padding: 6px; display: grid; }
+.topbar .wkdrop a { color: var(--ink); padding: 10px 12px; border-radius: 6px; font-weight: 700; white-space: nowrap; }
+.topbar .wkdrop a:hover, .topbar .wkdrop a[aria-current="page"] { background: var(--pink-soft); }

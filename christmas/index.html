@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&family=Sacramento&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
-<link rel="stylesheet" href="../style.css?v=20261113">
+<link rel="stylesheet" href="../style.css?v=20261113c">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -29,8 +29,7 @@
     <div class="topbar">
       <div class="when"><strong>Christmas Season in Brenham</strong></div>
       <nav>
-        <label class="sr" for="issuepick">Pick an issue</label>
-        <select id="issuepick" onchange="location.href=this.value"><option value="../2026-11-12/index.html">Nov 12 to 15 (newest)</option><option value="../2026-11-05/index.html">Nov 5 to 8</option><option value="../2026-10-29/index.html">Oct 29 to Nov 1</option><option value="../2026-10-23/index.html">Oct 23 to 25</option></select>
+        <details class="wkmenu"><summary>Weekends</summary><div class="wkdrop"><a href="../2026-11-12/index.html">Newest: Nov 12 to 15</a><a href="../2026-11-05/index.html">Nov 5 to 8</a><a href="../2026-10-29/index.html">Oct 29 to Nov 1</a><a href="../2026-10-23/index.html">Oct 23 to 25</a></div></details>
         
         <a class="special xmas" href="../christmas/index.html" aria-current="page">Christmas</a>
         <a href="../about/index.html">About</a>
@@ -337,6 +336,7 @@
   }
 })();
 </script>
+<script>document.addEventListener("click", function (e) { var m = document.querySelector(".wkmenu"); if (m && m.open && !m.contains(e.target)) m.open = false; });</script>
 <script data-goatcounter="https://brenhameveryday.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
