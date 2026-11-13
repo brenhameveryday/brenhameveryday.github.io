@@ -159,7 +159,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
 (function () {{
   var cards = document.querySelectorAll("article.card[data-f]");
   if (!cards.length) return;
-  var opts = [["all","All picks"],["kids","For kids"],["adults","For the adults"],["free","Free"],["outdoors","Outdoors"],["brenham","In Brenham"],["nearby","Nearby towns"]];
+  var opts = [["all","All picks"],["kids","For kids"],["adults","For the adults"],["free","Free"],["lights","Christmas lights"],["outdoors","Outdoors"],["brenham","In Brenham"],["nearby","Nearby towns"]];
   var have = {{}};
   cards.forEach(function (c) {{ c.getAttribute("data-f").split(" ").forEach(function (t) {{ have[t] = 1; }}); }});
   var bar = document.createElement("div");
