@@ -45,7 +45,7 @@ def load_issues():
 SHOW_SPOTLIGHTS = False
 
 
-def page(title, description, prefix, body, issues, current=None, preview=False, pumpkins=False, spooky=False, christmas=False):
+def page(title, description, prefix, body, issues, current=None, preview=False, pumpkins=False, spooky=False, christmas=False, thanks=False):
     """prefix is the relative path back to the site root ("" or "../")."""
     opts = []
     newest_pub = issues_published(issues)[-1]
@@ -103,6 +103,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
       <nav>
         <details class="wkmenu"><summary>Weekends</summary><div class="wkdrop">{''.join(opts)}</div></details>
         {specials}
+        <a class="special" href="{prefix}thanksgiving/index.html"{' aria-current="page"' if thanks else ''}>Thanksgiving</a>
         <a class="special xmas" href="{prefix}christmas/index.html"{' aria-current="page"' if christmas else ''}>Christmas</a>
         {spot_nav}<a href="{prefix}about/index.html">About</a>
         <a href="{prefix}contact/index.html">Contact</a>
@@ -167,7 +168,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
 (function () {{
   var cards = document.querySelectorAll("article.card[data-f]");
   if (!cards.length) return;
-  var opts = [["all","All picks"],["kidevents","Kids events"],["santa","Santa"],["lights","Christmas lights"],["shopping","Shopping"],["nativity","Nativities"],["music","Music"],["kids","For kids"],["adults","For the adults"],["free","Free"],["outdoors","Outdoors"],["brenham","In Brenham"],["nearby","Nearby towns"]];
+  var opts = [["all","All picks"],["order","Order ahead"],["tday","Thanksgiving Day"],["kidsout","Kids out of school"],["giveback","Give back"],["shop","Shop small"],["kidevents","Kids events"],["santa","Santa"],["lights","Christmas lights"],["shopping","Shopping"],["nativity","Nativities"],["music","Music"],["kids","For kids"],["adults","For the adults"],["free","Free"],["outdoors","Outdoors"],["brenham","In Brenham"],["nearby","Nearby towns"]];
   var have = {{}};
   cards.forEach(function (c) {{ c.getAttribute("data-f").split(" ").forEach(function (t) {{ have[t] = 1; }}); }});
   var bar = document.createElement("div");
@@ -271,6 +272,10 @@ def main():
     os.makedirs(os.path.join(OUT, "christmas"))
     open(os.path.join(OUT, "christmas", "index.html"), "w", encoding="utf-8").write(
         page("Christmas Season in Brenham", "Every Christmas event in and around Brenham, TX, all in one place.", "../", xmas, issues, christmas=True))
+    tg = open(os.path.join(ROOT, "thanksgiving.html"), encoding="utf-8").read()
+    os.makedirs(os.path.join(OUT, "thanksgiving"))
+    open(os.path.join(OUT, "thanksgiving", "index.html"), "w", encoding="utf-8").write(
+        page("Thanksgiving in Brenham", "Thanksgiving meal pre-orders, things to do over Thanksgiving break, and ways to give back in and around Brenham, TX.", "../", tg, issues, pumpkins=True, thanks=True))
     os.makedirs(os.path.join(OUT, "scorecard"))
     open(os.path.join(OUT, "scorecard", "index.html"), "w", encoding="utf-8").write(
         '<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=../eat-with-kids/"><link rel="canonical" href="../eat-with-kids/">')

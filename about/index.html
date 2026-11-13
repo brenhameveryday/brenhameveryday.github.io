@@ -31,6 +31,7 @@
       <nav>
         <details class="wkmenu"><summary>Weekends</summary><div class="wkdrop"><a href="../2026-11-12/index.html">Newest: Nov 12 to 15</a><a href="../2026-11-05/index.html">Nov 5 to 8</a><a href="../2026-10-29/index.html">Oct 29 to Nov 1</a><a href="../2026-10-23/index.html">Oct 23 to 25</a></div></details>
         
+        <a class="special" href="../thanksgiving/index.html">Thanksgiving</a>
         <a class="special xmas" href="../christmas/index.html">Christmas</a>
         <a href="../about/index.html">About</a>
         <a href="../contact/index.html">Contact</a>
@@ -129,7 +130,7 @@
 (function () {
   var cards = document.querySelectorAll("article.card[data-f]");
   if (!cards.length) return;
-  var opts = [["all","All picks"],["kidevents","Kids events"],["santa","Santa"],["lights","Christmas lights"],["shopping","Shopping"],["nativity","Nativities"],["music","Music"],["kids","For kids"],["adults","For the adults"],["free","Free"],["outdoors","Outdoors"],["brenham","In Brenham"],["nearby","Nearby towns"]];
+  var opts = [["all","All picks"],["order","Order ahead"],["tday","Thanksgiving Day"],["kidsout","Kids out of school"],["giveback","Give back"],["shop","Shop small"],["kidevents","Kids events"],["santa","Santa"],["lights","Christmas lights"],["shopping","Shopping"],["nativity","Nativities"],["music","Music"],["kids","For kids"],["adults","For the adults"],["free","Free"],["outdoors","Outdoors"],["brenham","In Brenham"],["nearby","Nearby towns"]];
   var have = {};
   cards.forEach(function (c) { c.getAttribute("data-f").split(" ").forEach(function (t) { have[t] = 1; }); });
   var bar = document.createElement("div");
