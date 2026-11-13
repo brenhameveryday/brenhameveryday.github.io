@@ -44,7 +44,7 @@ def load_issues():
 SHOW_SPOTLIGHTS = False
 
 
-def page(title, description, prefix, body, issues, current=None, preview=False, pumpkins=False, spooky=False):
+def page(title, description, prefix, body, issues, current=None, preview=False, pumpkins=False, spooky=False, christmas=False):
     """prefix is the relative path back to the site root ("" or "../")."""
     opts = []
     for i in reversed(issues):
@@ -109,7 +109,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
       {issue_line}
     </header>
   </div>
-  <div class="scene">{scene(pumpkins=pumpkins, spooky=spooky)}</div>
+  <div class="scene">{scene(pumpkins=pumpkins, spooky=spooky, christmas=christmas)}</div>
 </div>
 <main class="wrap">
   <div class="signup">
@@ -159,7 +159,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
 (function () {{
   var cards = document.querySelectorAll("article.card[data-f]");
   if (!cards.length) return;
-  var opts = [["all","All picks"],["kids","For kids"],["adults","For the adults"],["free","Free"],["lights","Christmas lights"],["outdoors","Outdoors"],["brenham","In Brenham"],["nearby","Nearby towns"]];
+  var opts = [["all","All picks"],["santa","Santa"],["lights","Christmas lights"],["shopping","Shopping"],["nativity","Nativities"],["crafts","Kids crafts"],["music","Music"],["kids","For kids"],["adults","For the adults"],["free","Free"],["outdoors","Outdoors"],["brenham","In Brenham"],["nearby","Nearby towns"]];
   var have = {{}};
   cards.forEach(function (c) {{ c.getAttribute("data-f").split(" ").forEach(function (t) {{ have[t] = 1; }}); }});
   var bar = document.createElement("div");
@@ -258,7 +258,7 @@ def main():
     xmas = open(os.path.join(ROOT, "christmas.html"), encoding="utf-8").read()
     os.makedirs(os.path.join(OUT, "christmas"))
     open(os.path.join(OUT, "christmas", "index.html"), "w", encoding="utf-8").write(
-        page("Christmas Season in Brenham", "Every Christmas event in and around Brenham, TX, all in one place.", "../", xmas, issues))
+        page("Christmas Season in Brenham", "Every Christmas event in and around Brenham, TX, all in one place.", "../", xmas, issues, christmas=True))
     os.makedirs(os.path.join(OUT, "scorecard"))
     open(os.path.join(OUT, "scorecard", "index.html"), "w", encoding="utf-8").write(
         '<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=../eat-with-kids/"><link rel="canonical" href="../eat-with-kids/">')
