@@ -200,3 +200,7 @@ header.mast { position: relative; }
 .wkdrop { position: absolute; z-index: 20; top: calc(100% + 6px); left: 0; min-width: 230px; background: #fff; border-radius: 10px; box-shadow: 0 8px 24px rgba(31,45,77,.25); padding: 6px; display: grid; }
 .topbar .wkdrop a { color: var(--ink); padding: 10px 12px; border-radius: 6px; font-weight: 700; white-space: nowrap; }
 .topbar .wkdrop a:hover, .topbar .wkdrop a[aria-current="page"] { background: var(--pink-soft); }
+.evform select { font: 400 17px/1.4 var(--body); color: var(--ink); background: var(--surface); border: 2px solid var(--line); border-radius: 10px; padding: 12px 14px; width: 100%; }
+.evonly { display: grid; gap: 14px; }
+.evonly[hidden] { display: none; }
+.evnote { margin: 0; font-weight: 400; color: var(--muted); }

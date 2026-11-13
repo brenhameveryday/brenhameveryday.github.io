@@ -91,7 +91,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&family=Sacramento&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
-<link rel="stylesheet" href="{prefix}style.css?v=20261113c">
+<link rel="stylesheet" href="{prefix}style.css?v=20261113d">
 </head>
 <body>
 {FOOT_SYMBOL}
@@ -105,7 +105,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
         {specials}
         <a class="special xmas" href="{prefix}christmas/index.html"{' aria-current="page"' if christmas else ''}>Christmas</a>
         {spot_nav}<a href="{prefix}about/index.html">About</a>
-        <a href="{prefix}send-your-event/index.html">Send an event</a>
+        <a href="{prefix}contact/index.html">Contact</a>
         <a href="https://www.instagram.com/brenhameveryday/" target="_blank" rel="noopener" aria-label="Instagram">{IG_ICON}</a>
         <a href="{FB_URL}" target="_blank" rel="noopener" aria-label="Facebook">{FB_ICON}</a>
       </nav>
@@ -135,7 +135,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
     </div>
     <p>We check every pick against the venue or event page before it goes out, but plans change, especially with Texas weather. Double-check before you load up the truck.</p>
     <p>Covering Brenham and towns within about 30 miles, including Chappell Hill, Burton, Independence, Washington, Round Top, Bellville, Somerville, Hempstead and Navasota. Follow along on <a href="https://www.instagram.com/brenhameveryday/" target="_blank" rel="noopener">Instagram</a> and <a href="{FB_URL}" target="_blank" rel="noopener">Facebook</a>.</p>
-    <p>Hosting something? <a href="{prefix}send-your-event/index.html">Send us your event</a>.</p>
+    <p>Hosting something? <a href="{prefix}contact/index.html?topic=event">Send us your event</a>.</p>
     <p class="love">I love Brenham, yes I do. I love Brenham, how 'bout you?</p>
     <p class="copy">&copy; 2026 Brenham Every Day. All rights reserved.</p>
   </footer>
@@ -260,10 +260,13 @@ def main():
     os.makedirs(os.path.join(OUT, "eat-with-kids"))
     open(os.path.join(OUT, "eat-with-kids", "index.html"), "w", encoding="utf-8").write(
         page("Where to Eat with Kids", "The most family-friendly spots around Brenham, checked by real parents.", "../", eat, issues))
-    send = open(os.path.join(ROOT, "send-your-event.html"), encoding="utf-8").read()
+    contact = open(os.path.join(ROOT, "contact.html"), encoding="utf-8").read()
+    os.makedirs(os.path.join(OUT, "contact"))
+    open(os.path.join(OUT, "contact", "index.html"), "w", encoding="utf-8").write(
+        page("Contact Us", "Send us your event, work with us, or just say hi.", "../", contact, issues))
     os.makedirs(os.path.join(OUT, "send-your-event"))
     open(os.path.join(OUT, "send-your-event", "index.html"), "w", encoding="utf-8").write(
-        page("Send Us Your Event", "Hosting something in or around Brenham? Tell us about it.", "../", send, issues))
+        '<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=../contact/?topic=event"><link rel="canonical" href="../contact/">')
     xmas = open(os.path.join(ROOT, "christmas.html"), encoding="utf-8").read()
     os.makedirs(os.path.join(OUT, "christmas"))
     open(os.path.join(OUT, "christmas", "index.html"), "w", encoding="utf-8").write(

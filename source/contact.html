@@ -1,0 +1,62 @@
+
+  <section class="intro">
+    <h2 style="margin-top:40px">Contact <span class="s">us</span></h2>
+    <p>Hosting something fun, want to work together, or just want to say hi? We'd love to hear from you.</p>
+
+    <form class="evform" id="evform" action="https://formspree.io/f/xaeonlnp" method="POST">
+      <input type="hidden" name="_subject" id="evsubject" value="Brenham Every Day: new message">
+      <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <label>What's this about?
+        <select name="Topic" id="evtopic" required>
+          <option value="">Pick one</option>
+          <option value="Send an event">Send an event</option>
+          <option value="Work with us">Work with us (sponsors, businesses)</option>
+          <option value="Feedback or a tip">Feedback or a tip</option>
+          <option value="Something else">Something else</option>
+        </select>
+      </label>
+      <div class="evonly" id="evonly" hidden>
+        <p class="evnote">Festivals, fundraisers, story times, live music, the little church carnival nobody knows about yet. If it's within about 30 miles of Brenham, send it our way! A week or more ahead is perfect.</p>
+        <label>Event name<input name="Event" data-ev required></label>
+        <label>When? (date and time)<input name="When" placeholder="Sat, Dec 5, 10am to 2pm" data-ev required></label>
+        <label>Where?<input name="Where" placeholder="Place and town" data-ev required></label>
+      </div>
+      <label><span id="msglabel">Your message</span><textarea name="Message" id="evmsg" rows="5"></textarea></label>
+      <label>Your name<input name="Name"></label>
+      <label>Your email<input type="email" name="email" required></label>
+      <button class="btn" type="submit">Send it</button>
+      <p class="evthanks" id="evthanks" hidden>Got it, thank you! We'll get back to you soon.</p>
+      <p class="everr" id="everr" hidden>Hmm, that didn't send. Try again, or email us below.</p>
+    </form>
+    <script>
+    (function () {
+      var f = document.getElementById("evform"), t = document.getElementById("evtopic"), ev = document.getElementById("evonly");
+      var lbl = document.getElementById("msglabel"), msg = document.getElementById("evmsg"), subj = document.getElementById("evsubject");
+      function sync() {
+        var isEv = t.value === "Send an event";
+        ev.hidden = !isEv;
+        ev.querySelectorAll("[data-ev]").forEach(function (i) { i.required = isEv; i.disabled = !isEv; });
+        lbl.textContent = isEv ? "Tell us about it" : "Your message";
+        msg.placeholder = isEv ? "Who's hosting, what it costs, anything for the kids, a link or your IG handle" : "";
+        subj.value = "Brenham Every Day: " + (t.value || "new message");
+      }
+      t.addEventListener("change", sync);
+      if (/[?&]topic=event/.test(location.search)) t.value = "Send an event";
+      sync();
+      f.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var b = f.querySelector("button"); b.disabled = true; b.textContent = "Sending...";
+        fetch(f.action, { method: "POST", body: new FormData(f), headers: { Accept: "application/json" } })
+          .then(function (r) { if (!r.ok) throw 0; f.reset(); sync(); document.getElementById("evthanks").hidden = false; document.getElementById("everr").hidden = true; b.textContent = "Sent!"; })
+          .catch(function () { document.getElementById("everr").hidden = false; b.disabled = false; b.textContent = "Send it"; });
+      });
+    })();
+    </script>
+
+    <h3>Rather email or message us?</h3>
+    <p>That works too! Email us at <a href="mailto:brenhameveryday@gmail.com">brenhameveryday@gmail.com</a>, or message us on Instagram or Facebook, whichever you like.</p>
+    <p style="display:flex;gap:10px;flex-wrap:wrap">
+      <a class="btn" href="https://ig.me/m/brenhameveryday" target="_blank" rel="noopener">Message us on Instagram</a>
+      <a class="btn ghost" href="https://www.facebook.com/share/19rUeAqB4Z/" target="_blank" rel="noopener">Message us on Facebook</a>
+    </p>
+  </section>
