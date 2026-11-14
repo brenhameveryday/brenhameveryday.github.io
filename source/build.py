@@ -81,7 +81,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
 <meta property="og:description" content="{html.escape(description)}">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Brenham Every Day">
-<meta property="og:image" content="https://brenhameveryday.com/img/share.png">
+<meta property="og:image" content="https://brenhameveryday.com/img/{'share-thanksgiving.png?v=1' if thanks else 'share.png'}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Brenham Every Day: the Brenham water tower, courthouse and Main Street">
