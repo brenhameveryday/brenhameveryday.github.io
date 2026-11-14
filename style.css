@@ -33,11 +33,10 @@ main.wrap { padding-block: 0 64px; }
 .topbar nav { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; }
 .topbar select { font: 700 15px var(--body); color: var(--on-denim); background: transparent; border: 1.5px solid rgba(255,255,255,.7); border-radius: 8px; padding: 8px 10px; max-width: 100%; }
 .topbar select option { color: var(--ink); }
-.topbar .special { background: var(--mint); color: var(--mint-ink); padding: 8px 12px; border-radius: 8px; }
-.topbar .special.xmas { background: #3f7a4c; color: #fff; }
-.topbar .special.tday { background: #b85a26; color: #fff; }
-.topbar .special.tday:hover, .topbar .special.tday[aria-current="page"] { background: #9a4a1f; color: #fff; }
-.topbar .special.xmas:hover, .topbar .special.xmas:active, .topbar .special.xmas:focus-visible, .topbar .special.xmas[aria-current="page"] { background: #d4483b; color: #fff; }
+.topbar .special { background: transparent; color: var(--on-denim); border: 1.5px solid rgba(255,255,255,.8); padding: 7px 12px; border-radius: 8px; }
+.topbar .special:hover, .topbar .special:active, .topbar .special[aria-current="page"] { background: #fff; color: var(--ink); border-color: #fff; }
+.topbar .special.tday:hover, .topbar .special.tday:active, .topbar .special.tday[aria-current="page"] { background: #b85a26; color: #fff; border-color: #b85a26; }
+.topbar .special.xmas:hover, .topbar .special.xmas:active, .topbar .special.xmas[aria-current="page"] { background: #d4483b; color: #fff; border-color: #d4483b; }
 .over { margin: 0; }
 .over a { color: var(--on-denim); font-weight: 700; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
