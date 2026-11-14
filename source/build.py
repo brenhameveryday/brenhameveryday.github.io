@@ -4,8 +4,7 @@ Each file in issues/ is named YYYY-MM-DD.html (the weekend's first day) and star
 <!--meta {...} --> holding: start, end, label, range, sent, title, picks, publish_on,
 and optionally special (a nav button, e.g. "Halloween"), scene_pumpkins and scene_spooky.
 
-Usage: python3 build.py [--drafts] [--today YYYY-MM-DD] [--spotlights]
-  --spotlights  build the Local Spotlights pages and show them in the nav (off until launch)
+Usage: python3 build.py [--drafts] [--today YYYY-MM-DD]
   --drafts  also include issues whose publish_on is after today (marked as previews)
 Output goes to public/: index.html (newest published issue), one folder per issue,
 about/index.html, style.css, CNAME.
@@ -42,10 +41,10 @@ def load_issues():
     return issues
 
 
-SHOW_SPOTLIGHTS = False
+SHOW_SPOTLIGHTS = True
 
 
-def page(title, description, prefix, body, issues, current=None, preview=False, pumpkins=False, spooky=False, christmas=False, thanks=False):
+def page(title, description, prefix, body, issues, current=None, preview=False, pumpkins=False, spooky=False, christmas=False, thanks=False, guides=False):
     """prefix is the relative path back to the site root ("" or "../")."""
     opts = []
     newest_pub = issues_published(issues)[-1]
@@ -71,7 +70,6 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
         status = f'<strong>{html.escape(title)}</strong>'
         issue_line = ""
     banner = '<div class="preview">Preview. This issue isn\'t published yet.</div>' if preview else ""
-    spot_nav = f'<a href="{prefix}spotlights/index.html">Local spotlights</a>\n        ' if SHOW_SPOTLIGHTS else ""
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -91,7 +89,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&family=Sacramento&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
-<link rel="stylesheet" href="{prefix}style.css?v=20261113e">
+<link rel="stylesheet" href="{prefix}style.css?v=20261114a">
 </head>
 <body>
 {FOOT_SYMBOL}
@@ -101,14 +99,24 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
     <div class="topbar">
       <div class="when">{status}</div>
       <nav>
-        <details class="wkmenu"><summary>Weekends</summary><div class="wkdrop">{''.join(opts)}</div></details>
         {specials}
         <a class="special" href="{prefix}thanksgiving/index.html"{' aria-current="page"' if thanks else ''}>Thanksgiving</a>
         <a class="special xmas" href="{prefix}christmas/index.html"{' aria-current="page"' if christmas else ''}>Christmas</a>
-        {spot_nav}<a href="{prefix}about/index.html">About</a>
-        <a href="{prefix}contact/index.html">Contact</a>
-        <a href="https://www.instagram.com/brenhameveryday/" target="_blank" rel="noopener" aria-label="Instagram">{IG_ICON}</a>
-        <a href="{FB_URL}" target="_blank" rel="noopener" aria-label="Facebook">{FB_ICON}</a>
+        <details class="menu"><summary>Menu</summary>
+          <div class="menudrop">
+            <a href="{prefix}index.html">This weekend</a>
+            <details class="wkmenu"><summary>Past weekends</summary><div class="wkdrop">{''.join(opts)}</div></details>
+            <a href="{prefix}christmas/index.html">Christmas in Brenham</a>
+            <a href="{prefix}thanksgiving/index.html">Thanksgiving in Brenham</a>
+            <a href="{prefix}guides/index.html"{' aria-current="page"' if guides else ''}>Guides</a>
+            <a href="{prefix}spotlights/index.html">Local spotlights</a>
+            <a href="{prefix}contact/index.html?topic=event">Send us your event</a>
+            <a href="{prefix}about/index.html">About</a>
+            <a href="{prefix}contact/index.html">Contact</a>
+            <div class="menusocial"><a href="https://www.instagram.com/brenhameveryday/" target="_blank" rel="noopener" aria-label="Instagram">{IG_ICON}</a><a href="{FB_URL}" target="_blank" rel="noopener" aria-label="Facebook">{FB_ICON}</a></div>
+            <a class="btn menusub" href="https://brenhameveryday.beehiiv.com/subscribe" target="_blank" rel="noopener">Get it every Wednesday</a>
+          </div>
+        </details>
       </nav>
       <p class="over" id="over" hidden></p>
     </div>
@@ -210,7 +218,17 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
   }}
 }})();
 </script>
-<script>document.addEventListener("click", function (e) {{ var m = document.querySelector(".wkmenu"); if (m && m.open && !m.contains(e.target)) m.open = false; }});</script>
+<script>
+(function () {{
+  var days = document.querySelectorAll("main h2.dayh");
+  if (days.length < 3) return;
+  var box = document.createElement("div");
+  box.className = "signup midsign";
+  box.innerHTML = '<h3>Liking these picks? Get them every Wednesday.</h3><a class="btn" href="https://brenhameveryday.beehiiv.com/subscribe" target="_blank" rel="noopener">Sign me up</a><small>One email a week. Takes 10 seconds.</small>';
+  days[2].parentNode.insertBefore(box, days[2]);
+}})();
+</script>
+<script>document.addEventListener("click", function (e) {{ var m = document.querySelector(".menu"); if (m && m.open && !m.contains(e.target)) m.open = false; }});</script>
 <script data-goatcounter="https://brenhameveryday.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
@@ -225,7 +243,7 @@ def main():
     args = sys.argv[1:]
     drafts = "--drafts" in args
     global SHOW_SPOTLIGHTS
-    SHOW_SPOTLIGHTS = "--spotlights" in args
+    SHOW_SPOTLIGHTS = True  # launched 2026-11-14
     today = datetime.date.today().isoformat()
     if "--today" in args:
         today = args[args.index("--today") + 1]
@@ -279,10 +297,33 @@ def main():
     os.makedirs(os.path.join(OUT, "scorecard"))
     open(os.path.join(OUT, "scorecard", "index.html"), "w", encoding="utf-8").write(
         '<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=../eat-with-kids/"><link rel="canonical" href="../eat-with-kids/">')
-    if SHOW_SPOTLIGHTS:
-        build_spotlights(issues)
+    build_spotlights(issues)
+    build_guides(issues)
     print("built", [i["slug"] + (" (draft)" if i["draft"] else "") for i in issues], "newest:", newest["slug"])
 
+
+
+GUIDES = [
+    ("christmas/index.html", "xmas", "Christmas in Brenham", "Every Christmas event around Brenham in one place: Santa, lights, parades, nativities and more."),
+    ("thanksgiving/index.html", "fall", "Thanksgiving in Brenham", "Pie and meal pre-orders, things to do over Thanksgiving break, and ways to give back."),
+    ("spotlights/index.html", "spot", "Local spotlights", "Small farms, makers and businesses around Brenham worth knowing."),
+]
+
+
+def build_guides(issues):
+    """Guides hub: one card per evergreen guide page."""
+    cards = "".join(
+        f'<a class="guide-card {cls}" href="../{href}"><span class="gtag">Guide</span><h4>{html.escape(name)}</h4><p>{html.escape(blurb)}</p><span class="go">Open the guide</span></a>'
+        for href, cls, name, blurb in GUIDES)
+    body = ('<section class="intro"><h2 style="margin-top:40px">Brenham <span class="s">guides</span></h2>'
+            '<p>The good stuff that sticks around longer than a weekend. Save this page!</p>'
+            f'<div class="guide-list">{cards}</div>'
+            '<h3>Coming soon</h3>'
+            '<p>Favorite playgrounds, rainy-day spots, coffee shops, and a new-to-Brenham guide. Got a favorite we should include? '
+            '<a href="../contact/index.html">Tell us</a>.</p></section>')
+    os.makedirs(os.path.join(OUT, "guides"))
+    open(os.path.join(OUT, "guides", "index.html"), "w", encoding="utf-8").write(
+        page("Brenham Guides", "Seasonal and evergreen guides for families in and around Brenham, TX.", "../", body, issues, guides=True))
 
 
 def build_spotlights(issues):
