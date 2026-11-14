@@ -89,7 +89,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&family=Sacramento&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
-<link rel="stylesheet" href="{prefix}style.css?v=20261114e">
+<link rel="stylesheet" href="{prefix}style.css?v=20261114f">
 </head>
 <body>
 {FOOT_SYMBOL}
@@ -97,7 +97,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
 <div class="band">
   <div class="wrap">
     <div class="topbar">
-      <div class="when">{status}</div>
+      <div class="toprow"><div class="when">{status}</div><div class="topsocial"><a href="https://www.instagram.com/brenhameveryday/" target="_blank" rel="noopener" aria-label="Instagram">{IG_ICON}</a><a href="{FB_URL}" target="_blank" rel="noopener" aria-label="Facebook">{FB_ICON}</a></div></div>
       <nav>
         {specials}
         <a class="special tday" href="{prefix}thanksgiving/index.html"{' aria-current="page"' if thanks else ''}>Thanksgiving</a>
@@ -141,6 +141,10 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
       <h3>Want next weekend's guide in your inbox?</h3>
       <a class="btn" href="https://brenhameveryday.beehiiv.com/subscribe" target="_blank" rel="noopener">Sign me up</a>
       <small>Like a friend who knows what's going on… for the most part. Every Wednesday.</small>
+    </div>
+    <div class="follow">
+      <h3>Follow along</h3>
+      <div class="follow-row"><a class="btn ghost" href="https://www.instagram.com/brenhameveryday/" target="_blank" rel="noopener">{IG_ICON}Instagram</a><a class="btn ghost" href="{FB_URL}" target="_blank" rel="noopener">{FB_ICON}Facebook</a></div>
     </div>
     <p>We check every pick against the venue or event page before it goes out, but plans change, especially with Texas weather. Double-check before you load up the truck.</p>
     <p>Covering Brenham and towns within about 30 miles, including Chappell Hill, Burton, Independence, Washington, Round Top, Bellville, Somerville, Hempstead and Navasota. Follow along on <a href="https://www.instagram.com/brenhameveryday/" target="_blank" rel="noopener">Instagram</a> and <a href="{FB_URL}" target="_blank" rel="noopener">Facebook</a>.</p>
