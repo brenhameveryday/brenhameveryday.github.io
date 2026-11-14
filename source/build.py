@@ -89,7 +89,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&family=Sacramento&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
-<link rel="stylesheet" href="{prefix}style.css?v=20261114d">
+<link rel="stylesheet" href="{prefix}style.css?v=20261114e">
 </head>
 <body>
 {FOOT_SYMBOL}
@@ -216,6 +216,31 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
     note.hidden = k === "all";
     note.textContent = k === "all" ? "" : shown + (shown === 1 ? " pick" : " picks") + " below. Tap All picks to see everything.";
   }}
+}})();
+</script>
+<script>
+(function () {{
+  var heads = document.querySelectorAll("main h2.dayh[id], main h2#ahead, main h2#give");
+  var spot = document.getElementById("filters-here");
+  if (heads.length < 3 || !spot) return;
+  var named = {{ season: "All season", order: "Order ahead", "break": "Thanksgiving break", give: "Give back", ahead: "Plan ahead" }};
+  function short(h) {{
+    if (named[h.id]) return named[h.id];
+    var t = h.cloneNode(true); var w = t.querySelector(".wxs"); if (w) w.remove();
+    t = t.textContent.trim();
+    if (/^Thanksgiving Day/.test(t)) return "Thanksgiving Day";
+    var m = t.match(/^[A-Za-z]+, ([A-Z][a-z]{{2}} \\d+)/); if (m) return m[1];
+    return t.slice(0, 3);
+  }}
+  var nav = document.createElement("nav");
+  nav.className = "jumpto"; nav.setAttribute("aria-label", "Jump to a section");
+  nav.innerHTML = '<span class="jumpto-title">Jump to</span>';
+  heads.forEach(function (h) {{
+    var a = document.createElement("a"); a.href = "#" + h.id; a.textContent = short(h);
+    a.addEventListener("click", function (e) {{ if (h.hidden) {{ e.preventDefault(); }} }});
+    nav.appendChild(a);
+  }});
+  spot.parentNode.insertBefore(nav, spot);
 }})();
 </script>
 <script>
