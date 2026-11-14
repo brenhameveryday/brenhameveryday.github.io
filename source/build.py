@@ -251,7 +251,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
 <script>
 (function () {{
   var days = document.querySelectorAll("main h2.dayh");
-  if (days.length < 3) return;
+  if (days.length < 3 || !document.getElementById("ahead")) return;  // weekend guide pages only
   var box = document.createElement("div");
   box.className = "signup midsign";
   box.innerHTML = '<h3>Liking these picks? Get them every Wednesday.</h3><a class="btn" href="https://brenhameveryday.beehiiv.com/subscribe" target="_blank" rel="noopener">Sign me up</a><small>One email a week!</small>';
