@@ -89,7 +89,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&family=Sacramento&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
-<link rel="stylesheet" href="{prefix}style.css?v=20261114a">
+<link rel="stylesheet" href="{prefix}style.css?v=20261114b">
 </head>
 <body>
 {FOOT_SYMBOL}
@@ -100,7 +100,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
       <div class="when">{status}</div>
       <nav>
         {specials}
-        <a class="special" href="{prefix}thanksgiving/index.html"{' aria-current="page"' if thanks else ''}>Thanksgiving</a>
+        <a class="special tday" href="{prefix}thanksgiving/index.html"{' aria-current="page"' if thanks else ''}>Thanksgiving</a>
         <a class="special xmas" href="{prefix}christmas/index.html"{' aria-current="page"' if christmas else ''}>Christmas</a>
         <details class="menu"><summary>Menu</summary>
           <div class="menudrop">
@@ -126,7 +126,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
       {issue_line}
     </header>
   </div>
-  <div class="scene">{scene(pumpkins=pumpkins, spooky=spooky, christmas=christmas)}</div>
+  <div class="scene">{scene(pumpkins=pumpkins and not thanks, spooky=spooky, christmas=christmas, thanks=thanks)}</div>
 </div>
 <main class="wrap">
   <div class="signup">

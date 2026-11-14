@@ -1,5 +1,5 @@
 """The Brenham scene: water tower, courthouse, Main Street, trees, bluebonnet dots and fall pumpkins."""
-def scene(pumpkins=False, spooky=False, christmas=False):
+def scene(pumpkins=False, spooky=False, christmas=False, thanks=False):
     parts = ['<svg viewBox="0 0 1080 480" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">',
      '<path d="M0 330 C200 270 380 300 540 320 C720 340 880 280 1080 300 L1080 480 L0 480Z" fill="#8fbf8a"/>',
      # water tower
@@ -13,7 +13,7 @@ def scene(pumpkins=False, spooky=False, christmas=False):
      '<g fill="#fff" opacity=".85"><rect x="760" y="240" width="28" height="36"/><rect x="805" y="240" width="28" height="36"/><rect x="870" y="255" width="26" height="32"/><rect x="910" y="255" width="26" height="32"/><rect x="968" y="230" width="28" height="36"/><rect x="1012" y="230" width="28" height="36"/></g>',
      '<g fill="#1f2d4d"><rect x="780" y="295" width="34" height="45"/><rect x="882" y="300" width="34" height="40"/><rect x="988" y="295" width="34" height="45"/></g>',
      # trees (round; hidden at Christmas)
-     '' if christmas else '<g fill="#4f8a5b"><circle cx="330" cy="300" r="40"/><circle cx="370" cy="315" r="30"/><circle cx="60" cy="320" r="38"/><circle cx="720" cy="320" r="30"/></g>',
+     '' if christmas or thanks else '<g fill="#4f8a5b"><circle cx="330" cy="300" r="40"/><circle cx="370" cy="315" r="30"/><circle cx="60" cy="320" r="38"/><circle cx="720" cy="320" r="30"/></g>',
      '' if christmas else '<g fill="#6b4a2f"><rect x="326" y="320" width="8" height="30"/><rect x="56" y="340" width="8" height="20"/></g>',
     ]
     # bluebonnets, drawn as simple dots
@@ -34,6 +34,35 @@ def scene(pumpkins=False, spooky=False, christmas=False):
                 '<ellipse cx="0" cy="0" rx="34" ry="26" fill="#e98a3a"/><path d="M-18 -8 l7 -10 l7 10Z M4 -8 l7 -10 l7 10Z" fill="#1f2d4d"/>'
                 '<path d="M-20 6 Q0 24 20 6 L14 8 L10 13 L5 9 L0 14 L-5 9 L-10 13 L-14 8Z" fill="#1f2d4d"/></g>')
         parts.append(''.join(jack.format(x=x, y=y, s=sc) for x, y, sc in [(500, 395, 1.1), (570, 405, .8), (860, 400, 1), (180, 405, .85)]))
+    if thanks:
+        # fall trees in orange, red and gold
+        parts.append('<circle cx="330" cy="300" r="40" fill="#d9822b"/><circle cx="370" cy="315" r="30" fill="#c0492f"/><circle cx="60" cy="320" r="38" fill="#e3a832"/><circle cx="720" cy="320" r="30" fill="#c0492f"/>')
+        # harvest bunting across the courthouse and shops
+        def bunting(x1, x2, y):
+            cols = ['#b85a26', '#e3a832', '#c0492f', '#f4ecdf']
+            n = max(3, int((x2 - x1) / 24)); w = (x2 - x1) / n
+            out = [f'<path d="M{x1} {y} L{x2} {y}" stroke="#6b4a2f" stroke-width="2"/>']
+            for i in range(n):
+                x = x1 + i * w
+                out.append(f'<path d="M{x + 2:.0f} {y} L{x + w - 2:.0f} {y} L{x + w / 2:.0f} {y + 18}Z" fill="{cols[i % 4]}"/>')
+            return ''.join(out)
+        parts.append(bunting(400, 700, 172) + bunting(740, 1060, 212))
+        # hay bales and pumpkins
+        parts.append('<g fill="#e3c06a"><rect x="470" y="372" width="70" height="36" rx="6"/><rect x="840" y="378" width="60" height="32" rx="6"/></g>'
+                     '<g stroke="#c9a24f" stroke-width="2"><path d="M478 384 h54 M478 396 h54 M848 390 h44 M848 400 h44"/></g>'
+                     '<g fill="#e98a3a"><ellipse cx="505" cy="360" rx="20" ry="15"/><ellipse cx="575" cy="392" rx="22" ry="17"/><ellipse cx="930" cy="395" rx="20" ry="15"/></g>'
+                     '<g fill="#4f8a5b"><rect x="502" y="342" width="6" height="8" rx="2"/><rect x="572" y="372" width="6" height="8" rx="2"/><rect x="927" y="377" width="6" height="8" rx="2"/></g>')
+        # a friendly turkey on the hill
+        parts.append('<g transform="translate(250 390)">'
+                     '<g><ellipse cx="0" cy="-28" rx="13" ry="34" fill="#c0492f" transform="rotate(-50)"/><ellipse cx="0" cy="-30" rx="13" ry="36" fill="#e3a832" transform="rotate(-25)"/>'
+                     '<ellipse cx="0" cy="-32" rx="13" ry="38" fill="#b85a26"/><ellipse cx="0" cy="-30" rx="13" ry="36" fill="#e3a832" transform="rotate(25)"/><ellipse cx="0" cy="-28" rx="13" ry="34" fill="#c0492f" transform="rotate(50)"/></g>'
+                     '<ellipse cx="0" cy="0" rx="24" ry="22" fill="#6b4a2f"/><circle cx="0" cy="-26" r="13" fill="#7a5638"/>'
+                     '<circle cx="-4" cy="-29" r="2.5" fill="#1f2d4d"/><circle cx="4" cy="-29" r="2.5" fill="#1f2d4d"/><path d="M-4 -24 L4 -24 L0 -17Z" fill="#e3a832"/>'
+                     '<path d="M2 -21 q5 6 0 12 q-3 -5 0 -12Z" fill="#d9473b"/><path d="M-8 20 v10 M8 20 v10" stroke="#e3a832" stroke-width="3"/></g>')
+        # falling leaves
+        leaf = '<ellipse cx="{x}" cy="{y}" rx="7" ry="4" fill="{c}" transform="rotate({r} {x} {y})"/>'
+        parts.insert(1, ''.join(leaf.format(x=x, y=y, c=c, r=r) for x, y, c, r in
+                     [(300, 80, '#e3a832', 30), (440, 50, '#c0492f', -20), (700, 70, '#d9822b', 45), (860, 120, '#e3a832', -35), (990, 60, '#c0492f', 15), (120, 90, '#d9822b', -10)]))
     if christmas:
         def bulbs(x1, x2, y, sag):
             cols = ['#d9473b', '#5ee3b1', '#f2d07e', '#e5b6bd', '#4a68a3']
