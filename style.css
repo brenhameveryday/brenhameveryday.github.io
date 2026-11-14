@@ -238,3 +238,9 @@ header.mast { position: relative; }
 .guide-card p { margin: 0; opacity: .95; }
 .guide-card .gtag { font: 800 12px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; opacity: .85; }
 .guide-card .go { margin-top: 6px; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+
+/* Jump to row (2026-11-14) */
+.jumpto { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; margin: 4px 0 8px; font-size: 15px; }
+.jumpto-title { font: 800 12px/1 var(--display); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.jumpto a { color: var(--denim-ink); font-weight: 700; text-decoration: underline; text-decoration-color: var(--pink); text-decoration-thickness: 2px; text-underline-offset: 4px; padding: 4px 0; }
+main h2.dayh, main h2#ahead, main h2#give { scroll-margin-top: 130px; }
