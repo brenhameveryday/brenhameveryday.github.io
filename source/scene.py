@@ -36,6 +36,7 @@ def scene(pumpkins=False, spooky=False, christmas=False, thanks=False):
         parts.append(''.join(jack.format(x=x, y=y, s=sc) for x, y, sc in [(500, 395, 1.1), (570, 405, .8), (860, 400, 1), (180, 405, .85)]))
     if thanks:
         # fall trees in orange, red and gold
+        parts.append('<g fill="#6b4a2f"><rect x="366" y="330" width="8" height="22"/><rect x="716" y="335" width="8" height="20"/><rect x="326" y="320" width="8" height="30"/><rect x="56" y="340" width="8" height="20"/></g>')
         parts.append('<circle cx="330" cy="300" r="40" fill="#d9822b"/><circle cx="370" cy="315" r="30" fill="#c0492f"/><circle cx="60" cy="320" r="38" fill="#e3a832"/><circle cx="720" cy="320" r="30" fill="#c0492f"/>')
         # harvest bunting across the courthouse and shops
         def bunting(x1, x2, y):
