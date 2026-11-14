@@ -249,6 +249,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
 }})();
 </script>
 <script>document.addEventListener("click", function (e) {{ var m = document.querySelector(".menu"); if (m && m.open && !m.contains(e.target)) m.open = false; }});</script>
+<script>window.goatcounter = {{ path: function () {{ return location.pathname.replace(/index\\.html$/, "").replace(/([^/])$/, "$1/"); }} }};</script>
 <script data-goatcounter="https://brenhameveryday.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
