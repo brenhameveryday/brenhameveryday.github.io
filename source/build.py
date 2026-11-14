@@ -220,9 +220,10 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
 </script>
 <script>
 (function () {{
-  var heads = document.querySelectorAll("main h2.dayh[id], main h2#ahead, main h2#give");
+  // weekend guide pages only (they have a Plan ahead section)
+  var heads = document.querySelectorAll("main h2.dayh[id], main h2#ahead");
   var spot = document.getElementById("filters-here");
-  if (heads.length < 3 || !spot) return;
+  if (heads.length < 3 || !spot || !document.getElementById("ahead")) return;
   var named = {{ season: "All season", order: "Order ahead", "break": "Thanksgiving break", give: "Give back", ahead: "Plan ahead" }};
   function short(h) {{
     if (named[h.id]) return named[h.id];
