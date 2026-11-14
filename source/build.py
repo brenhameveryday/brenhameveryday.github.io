@@ -224,7 +224,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
   if (days.length < 3) return;
   var box = document.createElement("div");
   box.className = "signup midsign";
-  box.innerHTML = '<h3>Liking these picks? Get them every Wednesday.</h3><a class="btn" href="https://brenhameveryday.beehiiv.com/subscribe" target="_blank" rel="noopener">Sign me up</a><small>One email a week. Takes 10 seconds.</small>';
+  box.innerHTML = '<h3>Liking these picks? Get them every Wednesday.</h3><a class="btn" href="https://brenhameveryday.beehiiv.com/subscribe" target="_blank" rel="noopener">Sign me up</a><small>One email a week!</small>';
   days[2].parentNode.insertBefore(box, days[2]);
 }})();
 </script>
