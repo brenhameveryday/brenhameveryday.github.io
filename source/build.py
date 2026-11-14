@@ -42,9 +42,11 @@ def load_issues():
 
 
 SHOW_SPOTLIGHTS = True
+TODAY = datetime.date.today().isoformat()
+TDAY_END = "2026-11-30"  # Thanksgiving nav button retires after this day
 
 
-def page(title, description, prefix, body, issues, current=None, preview=False, pumpkins=False, spooky=False, christmas=False, thanks=False, guides=False):
+def page(title, description, prefix, body, issues, current=None, preview=False, pumpkins=False, spooky=False, christmas=False, thanks=False, guides=False, og_img=None):
     """prefix is the relative path back to the site root ("" or "../")."""
     opts = []
     newest_pub = issues_published(issues)[-1]
@@ -81,7 +83,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
 <meta property="og:description" content="{html.escape(description)}">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Brenham Every Day">
-<meta property="og:image" content="https://brenhameveryday.com/img/{'share-thanksgiving.png?v=2' if thanks else 'share.png'}">
+<meta property="og:image" content="https://brenhameveryday.com/img/{og_img or ('share-thanksgiving.png?v=2' if thanks else 'share-christmas.png?v=1' if christmas else 'share.png')}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Brenham Every Day: the Brenham water tower, courthouse and Main Street">
@@ -89,7 +91,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&family=Sacramento&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
-<link rel="stylesheet" href="{prefix}style.css?v=20261114g">
+<link rel="stylesheet" href="{prefix}style.css?v=20261114h">
 </head>
 <body>
 {FOOT_SYMBOL}
@@ -100,14 +102,14 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
       <div class="toprow"><div class="when">{status}</div><div class="topsocial"><a href="https://www.instagram.com/brenhameveryday/" target="_blank" rel="noopener" aria-label="Instagram">{IG_ICON}</a><a href="{FB_URL}" target="_blank" rel="noopener" aria-label="Facebook">{FB_ICON}</a></div></div>
       <nav>
         {specials}
-        <a class="special tday" href="{prefix}thanksgiving/index.html"{' aria-current="page"' if thanks else ''}>Thanksgiving</a>
+        {'' if TODAY > TDAY_END else f'<a class="special tday" href="{prefix}thanksgiving/index.html"' + (' aria-current="page"' if thanks else '') + '>Thanksgiving</a>'}
         <a class="special xmas" href="{prefix}christmas/index.html"{' aria-current="page"' if christmas else ''}>Christmas</a>
         <details class="menu"><summary>Menu</summary>
           <div class="menudrop">
             <a href="{prefix}index.html">This weekend</a>
             <details class="wkmenu"><summary>Past weekends</summary><div class="wkdrop">{''.join(opts)}</div></details>
             <a href="{prefix}christmas/index.html">Christmas in Brenham</a>
-            <a href="{prefix}thanksgiving/index.html">Thanksgiving in Brenham</a>
+            {'' if TODAY > TDAY_END else f'<a class="tday-link" href="{prefix}thanksgiving/index.html">Thanksgiving in Brenham</a>'}
             <a href="{prefix}guides/index.html"{' aria-current="page"' if guides else ''}>Guides</a>
             <a href="{prefix}spotlights/index.html">Local spotlights</a>
             <a href="{prefix}contact/index.html?topic=event">Send us your event</a>
@@ -248,8 +250,9 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
   spot.parentNode.insertBefore(nav, spot);
 }})();
 </script>
+<script>(function () {{ var t = new Intl.DateTimeFormat("en-CA", {{ timeZone: "America/Chicago" }}).format(new Date()); if (t > "{TDAY_END}") document.querySelectorAll(".special.tday, .tday-link").forEach(function (a) {{ a.remove(); }}); }})();</script>
 <script>document.addEventListener("click", function (e) {{ var m = document.querySelector(".menu"); if (m && m.open && !m.contains(e.target)) m.open = false; }});</script>
-<script>window.goatcounter = {{ path: function () {{ return location.pathname.replace(/index\\.html$/, "").replace(/([^/])$/, "$1/"); }} }};</script>
+<script>window.goatcounter = {{ path: function () {{ return location.pathname.replace(/index\\.html$/, "").replace(/([^/])$/, "$1/"); }}, referrer: function () {{ return /[?&]_bhlid=/.test(location.search) ? "Email (beehiiv)" : document.referrer; }} }};</script>
 <script data-goatcounter="https://brenhameveryday.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
@@ -268,6 +271,8 @@ def main():
     today = datetime.date.today().isoformat()
     if "--today" in args:
         today = args[args.index("--today") + 1]
+    global TODAY
+    TODAY = today
     issues = [i for i in load_issues() if i["publish_on"] <= today or drafts]
     for i in issues:
         i["draft"] = i["publish_on"] > today
@@ -347,6 +352,20 @@ def build_guides(issues):
         page("Brenham Guides", "Seasonal and evergreen guides for families in and around Brenham, TX.", "../", body, issues, guides=True))
 
 
+def spot_share(sp):
+    """Crop the spotlight's thumb photo to a 1200x630 link-preview image; returns its path under img/."""
+    from PIL import Image
+    folder = sp["slug"].split("-")[0]
+    src = os.path.join(ROOT, "img", "spotlights", folder, sp["thumb"])
+    im = Image.open(src).convert("RGB")
+    w, h = im.size; tw = min(w, int(h * 1200 / 630)); th = int(tw * 630 / 1200)
+    left, top = (w - tw) // 2, (h - th) // 2
+    im = im.crop((left, top, left + tw, top + th)).resize((1200, 630))
+    out = os.path.join(OUT, "img", "spotlights", folder, "share.jpg")
+    im.save(out, quality=85, optimize=True)
+    return f"spotlights/{folder}/share.jpg?v=1"
+
+
 def build_spotlights(issues):
     """Local Spotlights: one page per spotlights/*.html (first line <!--spot {...} -->), plus a list page."""
     src = os.path.join(ROOT, "spotlights")
@@ -363,7 +382,7 @@ def build_spotlights(issues):
         d = os.path.join(OUT, "spotlights", sp["slug"])
         os.makedirs(d)
         open(os.path.join(d, "index.html"), "w", encoding="utf-8").write(
-            page(f"{sp['name']}: Local Spotlight", sp["blurb"], "../../", sp["body"], issues))
+            page(f"{sp['name']}: Local Spotlight", sp["blurb"], "../../", sp["body"], issues, og_img=spot_share(sp)))
     cards = "".join(
         f'<a class="spot-card" href="{sp["slug"]}/index.html"><img src="../img/spotlights/{sp["slug"].split("-")[0]}/{sp["thumb"]}" alt="" loading="lazy">'
         f'<div><p class="kicker">{sp["town"]} · {sp["date"]}</p><h4>{sp["name"]}</h4><p>{sp["blurb"]}</p></div></a>'
