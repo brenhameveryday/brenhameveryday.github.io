@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&family=Sacramento&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
-<link rel="stylesheet" href="../style.css?v=20261113e">
+<link rel="stylesheet" href="../style.css?v=20261114b">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -29,14 +29,24 @@
     <div class="topbar">
       <div class="when"><strong>Where to Eat with Kids</strong></div>
       <nav>
-        <details class="wkmenu"><summary>Weekends</summary><div class="wkdrop"><a href="../2026-11-12/index.html">Newest: Nov 12 to 15</a><a href="../2026-11-05/index.html">Nov 5 to 8</a><a href="../2026-10-29/index.html">Oct 29 to Nov 1</a><a href="../2026-10-23/index.html">Oct 23 to 25</a></div></details>
         
-        <a class="special" href="../thanksgiving/index.html">Thanksgiving</a>
+        <a class="special tday" href="../thanksgiving/index.html">Thanksgiving</a>
         <a class="special xmas" href="../christmas/index.html">Christmas</a>
-        <a href="../about/index.html">About</a>
-        <a href="../contact/index.html">Contact</a>
-        <a href="https://www.instagram.com/brenhameveryday/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
-        <a href="https://www.facebook.com/share/19rUeAqB4Z/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M15 8h-1.5A1.5 1.5 0 0 0 12 9.5V21M9.5 13H15" stroke-linecap="round"/></svg></a>
+        <details class="menu"><summary>Menu</summary>
+          <div class="menudrop">
+            <a href="../index.html">This weekend</a>
+            <details class="wkmenu"><summary>Past weekends</summary><div class="wkdrop"><a href="../2026-11-12/index.html">Newest: Nov 12 to 15</a><a href="../2026-11-05/index.html">Nov 5 to 8</a><a href="../2026-10-29/index.html">Oct 29 to Nov 1</a><a href="../2026-10-23/index.html">Oct 23 to 25</a></div></details>
+            <a href="../christmas/index.html">Christmas in Brenham</a>
+            <a href="../thanksgiving/index.html">Thanksgiving in Brenham</a>
+            <a href="../guides/index.html">Guides</a>
+            <a href="../spotlights/index.html">Local spotlights</a>
+            <a href="../contact/index.html?topic=event">Send us your event</a>
+            <a href="../about/index.html">About</a>
+            <a href="../contact/index.html">Contact</a>
+            <div class="menusocial"><a href="https://www.instagram.com/brenhameveryday/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a><a href="https://www.facebook.com/share/19rUeAqB4Z/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M15 8h-1.5A1.5 1.5 0 0 0 12 9.5V21M9.5 13H15" stroke-linecap="round"/></svg></a></div>
+            <a class="btn menusub" href="https://brenhameveryday.beehiiv.com/subscribe" target="_blank" rel="noopener">Get it every Wednesday</a>
+          </div>
+        </details>
       </nav>
       <p class="over" id="over" hidden></p>
     </div>
@@ -160,7 +170,17 @@
   }
 })();
 </script>
-<script>document.addEventListener("click", function (e) { var m = document.querySelector(".wkmenu"); if (m && m.open && !m.contains(e.target)) m.open = false; });</script>
+<script>
+(function () {
+  var days = document.querySelectorAll("main h2.dayh");
+  if (days.length < 3) return;
+  var box = document.createElement("div");
+  box.className = "signup midsign";
+  box.innerHTML = '<h3>Liking these picks? Get them every Wednesday.</h3><a class="btn" href="https://brenhameveryday.beehiiv.com/subscribe" target="_blank" rel="noopener">Sign me up</a><small>One email a week. Takes 10 seconds.</small>';
+  days[2].parentNode.insertBefore(box, days[2]);
+})();
+</script>
+<script>document.addEventListener("click", function (e) { var m = document.querySelector(".menu"); if (m && m.open && !m.contains(e.target)) m.open = false; });</script>
 <script data-goatcounter="https://brenhameveryday.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
