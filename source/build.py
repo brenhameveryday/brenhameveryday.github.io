@@ -42,9 +42,9 @@ def load_issues():
 
 
 TG_TOP = '''<div class="signup tgsign">
-    <h3>Get the Thanksgiving-week plan in your inbox</h3>
-    <a class="btn" href="https://brenhameveryday.beehiiv.com/subscribe?utm_source=thanksgiving-page" target="_blank" rel="noopener">Sign me up</a>
-    <small>It lands Tuesday night, Nov 24, in time to plan the whole long weekend. Then the weekend guide every week after.</small>
+    <h3>Get the free Brenham Holiday Cheat Sheet</h3>
+    <a class="btn" href="https://brenhameveryday.beehiiv.com/subscribe?utm_source=holiday-cheat-sheet" target="_blank" rel="noopener">Send me the cheat sheet</a>
+    <small>Every Thanksgiving order deadline and Christmas book-it-now date on two printable pages. Free for subscribers, it lands in your inbox right away.</small>
   </div>'''
 SHOW_SPOTLIGHTS = True
 TODAY = datetime.date.today().isoformat()
@@ -136,7 +136,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
   <div class="scene">{scene(pumpkins=pumpkins and not thanks, spooky=spooky, christmas=christmas, thanks=thanks)}</div>
 </div>
 <main class="wrap">
-  {TG_TOP if thanks else '''<div class="signup">
+  {TG_TOP if (thanks or christmas) else '''<div class="signup">
     <h3>Get it in your inbox every Wednesday</h3>
     <a class="btn" href="https://brenhameveryday.beehiiv.com/subscribe" target="_blank" rel="noopener">Sign me up</a>
     <small id="signupmsg">Like a friend who knows what's going on… for the most part. Every Wednesday.</small>
@@ -144,7 +144,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
 {body}
   <footer>
     <h2>Never miss <span class="s">a weekend</span></h2>
-    {TG_TOP if thanks else '''<div class="signup">
+    {TG_TOP if (thanks or christmas) else '''<div class="signup">
       <h3>Want next weekend's guide in your inbox?</h3>
       <a class="btn" href="https://brenhameveryday.beehiiv.com/subscribe" target="_blank" rel="noopener">Sign me up</a>
       <small>Like a friend who knows what's going on… for the most part. Every Wednesday.</small>
