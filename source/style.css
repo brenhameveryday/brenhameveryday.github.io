@@ -260,3 +260,16 @@ main h2.dayh, main h2#ahead, main h2#give { scroll-margin-top: 130px; }
 .topsocial { gap: 4px; margin-right: -10px; }
 .topsocial a { padding: 10px; }
 @media (max-width: 380px) { .topbar nav { gap: 8px; } .topbar .special, .menu > summary { padding: 7px 10px; font-size: 14px; } }
+
+/* /subscribe page (2026-11-15) */
+.subpage { max-width: 34rem; margin: 28px auto 8px; background: var(--pink-soft); border-radius: 18px; padding: 24px 22px; text-align: center; }
+.subpage .kicker { margin: 0; font: 800 12px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; color: var(--denim-ink); }
+.subpage h2 { margin: 10px 0 8px; }
+.subpage .lede { margin: 0 0 18px; }
+.subpage .subbtn { font-size: 18px; padding: 15px 26px; }
+.subpage .subnote { margin: 16px 0 0; }
+.subpage .subnote.small { font-size: 15px; color: var(--muted); margin-top: 8px; }
+body.slim .mast .sub, body.slim .topbar .special { display: none; }
+body.slim header.mast { padding-block: 16px 20px; }
+body.slim .logo .s { font-size: 36px; } body.slim .logo .b { font-size: 44px; }
+body.slim .subpage { margin-top: 20px; }

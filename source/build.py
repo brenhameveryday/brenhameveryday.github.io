@@ -51,7 +51,7 @@ TODAY = datetime.date.today().isoformat()
 TDAY_END = "2026-11-30"  # Thanksgiving nav button retires after this day
 
 
-def page(title, description, prefix, body, issues, current=None, preview=False, pumpkins=False, spooky=False, christmas=False, thanks=False, guides=False, og_img=None):
+def page(title, description, prefix, body, issues, current=None, preview=False, pumpkins=False, spooky=False, christmas=False, thanks=False, guides=False, og_img=None, slim=False):
     """prefix is the relative path back to the site root ("" or "../")."""
     opts = []
     newest_pub = issues_published(issues)[-1]
@@ -96,9 +96,9 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&family=Sacramento&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
-<link rel="stylesheet" href="{prefix}style.css?v=20261114h">
+<link rel="stylesheet" href="{prefix}style.css?v=20261115a">
 </head>
-<body>
+<body{' class="slim"' if slim else ''}>
 {FOOT_SYMBOL}
 {banner}
 <div class="band">
@@ -133,10 +133,10 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
       {issue_line}
     </header>
   </div>
-  <div class="scene">{scene(pumpkins=pumpkins and not thanks, spooky=spooky, christmas=christmas, thanks=thanks)}</div>
+  {'' if slim else '<div class="scene">' + scene(pumpkins=pumpkins and not thanks, spooky=spooky, christmas=christmas, thanks=thanks) + '</div>'}
 </div>
 <main class="wrap">
-  {TG_TOP if (thanks or christmas) else '''<div class="signup">
+  {'' if slim else TG_TOP if (thanks or christmas) else '''<div class="signup">
     <h3>Get it in your inbox every Wednesday</h3>
     <a class="btn" href="https://brenhameveryday.beehiiv.com/subscribe" target="_blank" rel="noopener">Sign me up</a>
     <small id="signupmsg">Like a friend who knows what's going on… for the most part. Every Wednesday.</small>
@@ -144,7 +144,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
 {body}
   <footer>
     <h2>Never miss <span class="s">a weekend</span></h2>
-    {'''<div class="signup">
+    {'' if slim else '''<div class="signup">
       <h3>Want next weekend's guide in your inbox?</h3>
       <a class="btn" href="https://brenhameveryday.beehiiv.com/subscribe" target="_blank" rel="noopener">Sign me up</a>
       <small>Like a friend who knows what's going on… for the most part. Every Wednesday.</small>
@@ -330,6 +330,7 @@ def main():
         '<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=../eat-with-kids/"><link rel="canonical" href="../eat-with-kids/">')
     build_spotlights(issues)
     build_guides(issues)
+    build_subscribe(issues)
     print("built", [i["slug"] + (" (draft)" if i["draft"] else "") for i in issues], "newest:", newest["slug"])
 
 
@@ -339,6 +340,26 @@ GUIDES = [
     ("thanksgiving/index.html", "fall", "Thanksgiving in Brenham", "Pie and meal pre-orders, things to do over Thanksgiving break, and ways to give back."),
     ("spotlights/index.html", "spot", "Local spotlights", "Small farms, makers and businesses around Brenham worth knowing."),
 ]
+
+
+SUB_URL = "https://brenhameveryday.beehiiv.com/subscribe?utm_source=subscribe-page"
+
+
+def build_subscribe(issues):
+    """/subscribe: one-box signup page for bio links, DMs and Story stickers. Gift line runs through New Year's."""
+    gift = TODAY <= "2027-01-01"
+    head = ('<p class="kicker">Free for subscribers</p><h2>Get the Brenham Holiday Cheat Sheet</h2>'
+            '<p class="lede">Every Thanksgiving order deadline, Christmas book-it-now date, plus Christmas break and New Year&rsquo;s, on three printable pages. Sign up and it lands in your inbox right away.</p>'
+            if gift else
+            '<h2>Get the weekend guide <span class="s">every Wednesday</span></h2>')
+    body = ('<section class="subpage">' + head +
+            f'<a class="btn subbtn" href="{SUB_URL}" target="_blank" rel="noopener">Sign me up</a>'
+            '<p class="subnote"><b>Every Wednesday:</b> the best family things to do in and around Brenham, plus a few just for the grown-ups. One email a week.</p>'
+            '<p class="subnote small">Like a friend who knows what&rsquo;s going on&hellip; for the most part.</p>'
+            '<p class="subnote small"><a href="../index.html">See this weekend&rsquo;s guide</a></p></section>')
+    os.makedirs(os.path.join(OUT, "subscribe"))
+    open(os.path.join(OUT, "subscribe", "index.html"), "w", encoding="utf-8").write(
+        page("Sign up for Brenham Every Day", "Get the Brenham Holiday Cheat Sheet and the weekend guide every Wednesday.", "../", body, issues, slim=True))
 
 
 def build_guides(issues):
