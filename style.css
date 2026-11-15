@@ -273,3 +273,9 @@ body.slim .mast .sub, body.slim .topbar .special { display: none; }
 body.slim header.mast { padding-block: 16px 20px; }
 body.slim .logo .s { font-size: 36px; } body.slim .logo .b { font-size: 44px; }
 body.slim .subpage { margin-top: 20px; }
+
+/* beehiiv type-your-email form; plain button only if the form fails to load */
+.bhform { width: 100%; }
+.bhform iframe { width: 100% !important; max-width: 100%; }
+.bhfallback { display: none; }
+.bhform.nofrm .bhfallback { display: inline-block; }
