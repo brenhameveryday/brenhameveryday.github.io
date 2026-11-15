@@ -44,7 +44,7 @@ def load_issues():
 TG_TOP = '''<div class="signup tgsign">
     <h3>Get the free Brenham Holiday Cheat Sheet</h3>
     <a class="btn" href="https://brenhameveryday.beehiiv.com/subscribe?utm_source=holiday-cheat-sheet" target="_blank" rel="noopener">Send me the cheat sheet</a>
-    <small>Every Thanksgiving order deadline and Christmas book-it-now date on two printable pages. Free for subscribers, it lands in your inbox right away.</small>
+    <small>Every Thanksgiving order deadline, Christmas book-it-now date, plus Christmas break and New Year&rsquo;s, on three printable pages. Free for subscribers, it lands in your inbox right away.</small>
   </div>'''
 SHOW_SPOTLIGHTS = True
 TODAY = datetime.date.today().isoformat()
