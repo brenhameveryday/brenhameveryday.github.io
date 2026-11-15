@@ -43,7 +43,7 @@ def load_issues():
 
 TG_TOP = '''<div class="signup tgsign">
     <h3>Get the Thanksgiving-week plan in your inbox</h3>
-    <a class="btn" href="https://brenhameveryday.beehiiv.com/subscribe?utm_source=thanksgiving-page" target="_blank" rel="noopener">Send it to me</a>
+    <a class="btn" href="https://brenhameveryday.beehiiv.com/subscribe?utm_source=thanksgiving-page" target="_blank" rel="noopener">Sign me up</a>
     <small>It lands Tuesday night, Nov 24, in time to plan the whole long weekend. Then the weekend guide every week after.</small>
   </div>'''
 SHOW_SPOTLIGHTS = True
