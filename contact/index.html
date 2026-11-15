@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&family=Sacramento&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
-<link rel="stylesheet" href="../style.css?v=20261114g">
+<link rel="stylesheet" href="../style.css?v=20261114h">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -37,7 +37,7 @@
             <a href="../index.html">This weekend</a>
             <details class="wkmenu"><summary>Past weekends</summary><div class="wkdrop"><a href="../2026-11-12/index.html">Newest: Nov 12 to 15</a><a href="../2026-11-05/index.html">Nov 5 to 8</a><a href="../2026-10-29/index.html">Oct 29 to Nov 1</a><a href="../2026-10-23/index.html">Oct 23 to 25</a></div></details>
             <a href="../christmas/index.html">Christmas in Brenham</a>
-            <a href="../thanksgiving/index.html">Thanksgiving in Brenham</a>
+            <a class="tday-link" href="../thanksgiving/index.html">Thanksgiving in Brenham</a>
             <a href="../guides/index.html">Guides</a>
             <a href="../spotlights/index.html">Local spotlights</a>
             <a href="../contact/index.html?topic=event">Send us your event</a>
@@ -239,7 +239,9 @@
   spot.parentNode.insertBefore(nav, spot);
 })();
 </script>
+<script>(function () { var t = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Chicago" }).format(new Date()); if (t > "2026-11-30") document.querySelectorAll(".special.tday, .tday-link").forEach(function (a) { a.remove(); }); })();</script>
 <script>document.addEventListener("click", function (e) { var m = document.querySelector(".menu"); if (m && m.open && !m.contains(e.target)) m.open = false; });</script>
+<script>window.goatcounter = { path: function () { return location.pathname.replace(/index\.html$/, "").replace(/([^/])$/, "$1/"); }, referrer: function () { return /[?&]_bhlid=/.test(location.search) ? "Email (beehiiv)" : document.referrer; } };</script>
 <script data-goatcounter="https://brenhameveryday.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>

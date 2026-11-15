@@ -256,3 +256,7 @@ main h2.dayh, main h2#ahead, main h2#give { scroll-margin-top: 130px; }
 
 .card.mini .rt small { display: block; font: 700 13px/1.4 var(--display); }
 .card.mini .rt:has(small) { white-space: nowrap; letter-spacing: -.02em; }
+
+.topsocial { gap: 4px; margin-right: -10px; }
+.topsocial a { padding: 10px; }
+@media (max-width: 380px) { .topbar nav { gap: 8px; } .topbar .special, .menu > summary { padding: 7px 10px; font-size: 14px; } }
