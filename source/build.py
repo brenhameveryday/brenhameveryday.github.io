@@ -144,7 +144,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
 {body}
   <footer>
     <h2>Never miss <span class="s">a weekend</span></h2>
-    {TG_TOP if (thanks or christmas) else '''<div class="signup">
+    {'''<div class="signup">
       <h3>Want next weekend's guide in your inbox?</h3>
       <a class="btn" href="https://brenhameveryday.beehiiv.com/subscribe" target="_blank" rel="noopener">Sign me up</a>
       <small>Like a friend who knows what's going on… for the most part. Every Wednesday.</small>
