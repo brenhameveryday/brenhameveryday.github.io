@@ -42,8 +42,8 @@ def load_issues():
 
 
 TG_TOP = '''<div class="signup tgsign">
-    <h3>Get the free Brenham Holiday Cheat Sheet</h3>
-    <a class="btn" href="https://brenhameveryday.beehiiv.com/subscribe?utm_source=holiday-cheat-sheet" target="_blank" rel="noopener">Send me the cheat sheet</a>
+    <h3>Get the free Brenham Holiday Guide</h3>
+    <a class="btn" href="https://brenhameveryday.beehiiv.com/subscribe?utm_source=holiday-guide" target="_blank" rel="noopener">Send me the holiday guide</a>
     <small>Every Thanksgiving order deadline, Christmas book-it-now date, plus Christmas break and New Year&rsquo;s, on three printable pages. Free for subscribers, it lands in your inbox right away.</small>
   </div>'''
 SHOW_SPOTLIGHTS = True
@@ -348,7 +348,7 @@ SUB_URL = "https://brenhameveryday.beehiiv.com/subscribe?utm_source=subscribe-pa
 def build_subscribe(issues):
     """/subscribe: one-box signup page for bio links, DMs and Story stickers. Gift line runs through New Year's."""
     gift = TODAY <= "2027-01-01"
-    head = ('<p class="kicker">Free for subscribers</p><h2>Get the Brenham Holiday Cheat Sheet</h2>'
+    head = ('<p class="kicker">Free for subscribers</p><h2>Get the Brenham Holiday Guide</h2>'
             '<p class="lede">Every Thanksgiving order deadline, Christmas book-it-now date, plus Christmas break and New Year&rsquo;s, on three printable pages. Sign up and it lands in your inbox right away.</p>'
             if gift else
             '<h2>Get the weekend guide <span class="s">every Wednesday</span></h2>')
@@ -359,7 +359,7 @@ def build_subscribe(issues):
             '<p class="subnote small"><a href="../index.html">See this weekend&rsquo;s guide</a></p></section>')
     os.makedirs(os.path.join(OUT, "subscribe"))
     open(os.path.join(OUT, "subscribe", "index.html"), "w", encoding="utf-8").write(
-        page("Sign up for Brenham Every Day", "Get the Brenham Holiday Cheat Sheet and the weekend guide every Wednesday.", "../", body, issues, slim=True))
+        page("Sign up for Brenham Every Day", "Get the Brenham Holiday Guide plus the best family things to do every Wednesday.", "../", body, issues, slim=True))
 
 
 def build_guides(issues):
