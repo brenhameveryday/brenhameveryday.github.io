@@ -41,9 +41,18 @@ def load_issues():
     return issues
 
 
+BH_FORM_ID = "9bd79a0c-a3ea-40ff-a7f8-a820b5fc88b1"  # beehiiv inline form "Website signup (brenhameveryday.com)"
+
+
+def bhform(href, label="Sign me up"):
+    """Type-your-email box (beehiiv embed). If it hasn't loaded after 6s, the plain button shows instead."""
+    return (f'<div class="bhform"><script async src="https://subscribe-forms.beehiiv.com/v3/loader.js" data-beehiiv-form="{BH_FORM_ID}"></script>'
+            f'<a class="btn bhfallback" href="{href}" target="_blank" rel="noopener">{label}</a></div>')
+
+
 TG_TOP = '''<div class="signup tgsign">
     <h3>Get the free Brenham Holiday Guide</h3>
-    <a class="btn" href="https://brenhameveryday.beehiiv.com/subscribe?utm_source=holiday-guide" target="_blank" rel="noopener">Send me the holiday guide</a>
+    ''' + bhform("https://brenhameveryday.beehiiv.com/subscribe?utm_source=holiday-guide", "Send me the holiday guide") + '''
     <small>Every Thanksgiving order deadline, Christmas book-it-now date, plus Christmas break and New Year&rsquo;s, on three printable pages. Free for subscribers, it lands in your inbox right away.</small>
   </div>'''
 SHOW_SPOTLIGHTS = True
@@ -96,7 +105,8 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&family=Sacramento&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
-<link rel="stylesheet" href="{prefix}style.css?v=20261115a">
+<link rel="stylesheet" href="{prefix}style.css?v=20261115b">
+<script type="text/javascript" async src="https://subscribe-forms.beehiiv.com/attribution.js"></script>
 </head>
 <body{' class="slim"' if slim else ''}>
 {FOOT_SYMBOL}
@@ -138,7 +148,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
 <main class="wrap">
   {'' if slim else TG_TOP if (thanks or christmas) else '''<div class="signup">
     <h3>Get it in your inbox every Wednesday</h3>
-    <a class="btn" href="https://brenhameveryday.beehiiv.com/subscribe" target="_blank" rel="noopener">Sign me up</a>
+    ''' + bhform("https://brenhameveryday.beehiiv.com/subscribe") + '''
     <small id="signupmsg">Like a friend who knows what's going on… for the most part. Every Wednesday.</small>
   </div>'''}
 {body}
@@ -258,6 +268,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
 <script>(function () {{ var t = new Intl.DateTimeFormat("en-CA", {{ timeZone: "America/Chicago" }}).format(new Date()); if (t > "{TDAY_END}") document.querySelectorAll(".special.tday, .tday-link").forEach(function (a) {{ a.remove(); }}); }})();</script>
 <script>document.addEventListener("click", function (e) {{ var m = document.querySelector(".menu"); if (m && m.open && !m.contains(e.target)) m.open = false; }});</script>
 <script>window.goatcounter = {{ path: function () {{ return location.pathname.replace(/index\\.html$/, "").replace(/([^/])$/, "$1/"); }}, referrer: function () {{ return /[?&]_bhlid=/.test(location.search) ? "Email (beehiiv)" : document.referrer; }} }};</script>
+<script>setTimeout(function () {{ document.querySelectorAll(".bhform").forEach(function (f) {{ if (!f.querySelector("iframe")) f.classList.add("nofrm"); }}); }}, 6000);</script>
 <script data-goatcounter="https://brenhameveryday.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
@@ -353,7 +364,7 @@ def build_subscribe(issues):
             if gift else
             '<h2>Get the weekend guide <span class="s">every Wednesday</span></h2>')
     body = ('<section class="subpage">' + head +
-            f'<a class="btn subbtn" href="{SUB_URL}" target="_blank" rel="noopener">Sign me up</a>'
+            bhform(SUB_URL) +
             '<p class="subnote"><b>Every Wednesday:</b> the best family things to do in and around Brenham, plus a few just for the grown-ups. One email a week.</p>'
             '<p class="subnote small">Like a friend who knows what&rsquo;s going on&hellip; for the most part.</p>'
             '<p class="subnote small"><a href="../index.html">See this weekend&rsquo;s guide</a></p></section>')
