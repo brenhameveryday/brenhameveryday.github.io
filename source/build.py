@@ -41,6 +41,11 @@ def load_issues():
     return issues
 
 
+TG_TOP = '''<div class="signup tgsign">
+    <h3>Get the Thanksgiving-week plan in your inbox</h3>
+    <a class="btn" href="https://brenhameveryday.beehiiv.com/subscribe?utm_source=thanksgiving-page" target="_blank" rel="noopener">Send it to me</a>
+    <small>It lands Tuesday night, Nov 24, in time to plan the whole long weekend. Then the weekend guide every week after.</small>
+  </div>'''
 SHOW_SPOTLIGHTS = True
 TODAY = datetime.date.today().isoformat()
 TDAY_END = "2026-11-30"  # Thanksgiving nav button retires after this day
@@ -131,19 +136,19 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
   <div class="scene">{scene(pumpkins=pumpkins and not thanks, spooky=spooky, christmas=christmas, thanks=thanks)}</div>
 </div>
 <main class="wrap">
-  <div class="signup">
+  {TG_TOP if thanks else '''<div class="signup">
     <h3>Get it in your inbox every Wednesday</h3>
     <a class="btn" href="https://brenhameveryday.beehiiv.com/subscribe" target="_blank" rel="noopener">Sign me up</a>
     <small id="signupmsg">Like a friend who knows what's going on… for the most part. Every Wednesday.</small>
-  </div>
+  </div>'''}
 {body}
   <footer>
     <h2>Never miss <span class="s">a weekend</span></h2>
-    <div class="signup">
+    {TG_TOP if thanks else '''<div class="signup">
       <h3>Want next weekend's guide in your inbox?</h3>
       <a class="btn" href="https://brenhameveryday.beehiiv.com/subscribe" target="_blank" rel="noopener">Sign me up</a>
       <small>Like a friend who knows what's going on… for the most part. Every Wednesday.</small>
-    </div>
+    </div>'''}
     <div class="follow">
       <h3>Follow along</h3>
       <div class="follow-row"><a class="btn ghost" href="https://www.instagram.com/brenhameveryday/" target="_blank" rel="noopener">{IG_ICON}Instagram</a><a class="btn ghost" href="{FB_URL}" target="_blank" rel="noopener">{FB_ICON}Facebook</a></div>
