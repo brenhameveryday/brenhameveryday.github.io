@@ -293,3 +293,4 @@ body.slim .subpage { margin-top: 20px; }
   font: 400 28px/1 var(--display); color: var(--ink); cursor: pointer; }
 @media (min-width: 700px) { .nudge { left: auto; right: 24px; bottom: 24px; width: 340px; } }
 @media (prefers-reduced-motion: reduce) { .nudge { transition: none; } }
+.footsub { margin: 4px 0 20px; font: 700 16px/1.4 var(--display); }
