@@ -121,7 +121,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
             <a href="{prefix}about/index.html">About</a>
             <a href="{prefix}contact/index.html">Contact</a>
             <div class="menusocial"><a href="https://www.instagram.com/brenhameveryday/" target="_blank" rel="noopener" aria-label="Instagram">{IG_ICON}</a><a href="{FB_URL}" target="_blank" rel="noopener" aria-label="Facebook">{FB_ICON}</a></div>
-            <a class="btn menusub" href="https://brenhameveryday.beehiiv.com/subscribe" target="_blank" rel="noopener">Get it every Wednesday</a>
+            <a class="btn menusub" href="https://brenhameveryday.beehiiv.com/subscribe" target="_blank" rel="noopener">Get it every Tuesday night</a>
           </div>
         </details>
       </nav>
@@ -137,9 +137,9 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
 </div>
 <main class="wrap">
   {TG_TOP if thanks else '''<div class="signup">
-    <h3>Get it in your inbox every Wednesday</h3>
+    <h3>Get it in your inbox every Tuesday night</h3>
     <a class="btn" href="https://brenhameveryday.beehiiv.com/subscribe" target="_blank" rel="noopener">Sign me up</a>
-    <small id="signupmsg">Like a friend who knows what's going on… for the most part. Every Wednesday.</small>
+    <small id="signupmsg">Like a friend who knows what's going on… for the most part. Every Tuesday night.</small>
   </div>'''}
 {body}
   <footer>
@@ -147,7 +147,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
     {TG_TOP if thanks else '''<div class="signup">
       <h3>Want next weekend's guide in your inbox?</h3>
       <a class="btn" href="https://brenhameveryday.beehiiv.com/subscribe" target="_blank" rel="noopener">Sign me up</a>
-      <small>Like a friend who knows what's going on… for the most part. Every Wednesday.</small>
+      <small>Like a friend who knows what's going on… for the most part. Every Tuesday night.</small>
     </div>'''}
     <div class="follow">
       <h3>Follow along</h3>
