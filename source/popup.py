@@ -2,6 +2,9 @@
 Phones: small bar slides up after 50% scroll. Computers: exit intent.
 Skipped while a signup box is on screen; 30-day snooze once shown (localStorage in try/catch)."""
 
+POPUP_FORM_ID = "9db22e13-0393-4787-a946-6d2b13077c43"   # beehiiv "Website pop-up (Holiday Guide)", button "Send it to me"
+WEEKLY_FORM_ID = "9bd79a0c-a3ea-40ff-a7f8-a820b5fc88b1"  # main site form, used after New Year's
+
 JS = """<script>(function () {
   var KEY = "bed_nudge", DAYS = 30, el = document.getElementById("nudge"), done = false;
   if (!el) return;
@@ -14,10 +17,9 @@ JS = """<script>(function () {
   }
   function show() {
     if (done || snoozed() || boxOnScreen()) return;
-    done = true; snooze(); el.hidden = false;
-    requestAnimationFrame(function () { requestAnimationFrame(function () { el.classList.add("on"); }); });
+    done = true; snooze(); el.classList.add("on");
   }
-  function hide() { el.classList.remove("on"); setTimeout(function () { el.hidden = true; }, 300); }
+  function hide() { el.classList.remove("on"); }
   el.querySelector(".nudge-x").addEventListener("click", hide);
   el.querySelector(".nudge-btn").addEventListener("click", function () { setTimeout(hide, 400); });
   if (snoozed()) return;
@@ -38,8 +40,10 @@ def popup_html(today):
     sub = ("Every deadline and date for Thanksgiving through New Year&rsquo;s, in your inbox right away."
            if gift else "The best family things to do in and around Brenham. One email a week.")
     btn = "Send it to me" if gift else "Sign me up"
-    return ('<div class="nudge" id="nudge" role="dialog" aria-label="' + head + '" hidden>'
+    return ('<div class="nudge" id="nudge" role="dialog" aria-label="' + head + '">'
             '<button class="nudge-x" type="button" aria-label="Close">&times;</button>'
             '<p class="nudge-h">' + head + '</p><p class="nudge-s">' + sub + '</p>'
-            '<a class="btn nudge-btn" href="https://brenhameveryday.beehiiv.com/subscribe?utm_source=popup" '
-            'target="_blank" rel="noopener">' + btn + '</a></div>' + JS)
+            '<div class="bhform"><script async src="https://subscribe-forms.beehiiv.com/v3/loader.js" '
+            'data-beehiiv-form="' + (POPUP_FORM_ID if gift else WEEKLY_FORM_ID) + '"></script>'
+            '<a class="btn bhfallback nudge-btn" href="https://brenhameveryday.beehiiv.com/subscribe?utm_source=popup" '
+            'target="_blank" rel="noopener">' + btn + '</a></div></div>' + JS)
