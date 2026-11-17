@@ -51,12 +51,14 @@ def bhform(href, label="Sign me up"):
             f'<a class="btn bhfallback" href="{href}" target="_blank" rel="noopener">{label}</a></div>')
 
 
-def footer_signup():
+def footer_signup(form=True):
+    """form=False: plain button (holiday pages already use the email form in their top box; one form per page)."""
     gift = TODAY <= "2027-01-01"
+    href = "https://brenhameveryday.beehiiv.com/subscribe?utm_source=footer"
     small = ("Plus the free Brenham Holiday Guide, sent right away." if gift
              else "Like a friend who knows what&rsquo;s going on&hellip; for the most part.")
     return ('<div class="signup"><h3>Get it in your inbox every Tuesday night</h3>'
-            + bhform("https://brenhameveryday.beehiiv.com/subscribe?utm_source=footer")
+            + (bhform(href) if form else '<a class="btn" href="' + href + '" target="_blank" rel="noopener">Sign me up</a>')
             + '<small>' + small + '</small></div>')
 
 
@@ -156,11 +158,11 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
   {'' if slim else '<div class="scene">' + scene(pumpkins=pumpkins and not thanks, spooky=spooky, christmas=christmas, thanks=thanks) + '</div>'}
 </div>
 <main class="wrap">
-  <!-- inline signup boxes removed 2026-11-17 (Caroline: pop-up only) -->
+  {TG_TOP if (thanks or christmas) and not slim else ''}
 {body}
   <footer>
     <h2>Never miss <span class="s">a weekend</span></h2>
-    {'' if slim else footer_signup()}
+    {'' if slim else footer_signup(form=not (thanks or christmas))}
     <div class="follow">
       <h3>Follow along</h3>
       <div class="follow-row"><a class="btn ghost" href="https://www.instagram.com/brenhameveryday/" target="_blank" rel="noopener">{IG_ICON}Instagram</a><a class="btn ghost" href="{FB_URL}" target="_blank" rel="noopener">{FB_ICON}Facebook</a></div>
