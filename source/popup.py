@@ -36,7 +36,7 @@ JS = """<script>(function () {
 
 def popup_html(today):
     gift = today <= "2027-01-01"
-    head = "Get the free Brenham Holiday Guide" if gift else "Get the weekend guide every Wednesday"
+    head = "Get the free Brenham Holiday Guide" if gift else "Get the weekend guide every Tuesday night"
     sub = ("Every deadline and date for Thanksgiving through New Year&rsquo;s, in your inbox right away."
            if gift else "The best family things to do in and around Brenham. One email a week.")
     btn = "Send it to me" if gift else "Sign me up"

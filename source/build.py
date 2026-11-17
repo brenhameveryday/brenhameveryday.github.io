@@ -132,7 +132,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
             <a href="{prefix}about/index.html">About</a>
             <a href="{prefix}contact/index.html">Contact</a>
             <div class="menusocial"><a href="https://www.instagram.com/brenhameveryday/" target="_blank" rel="noopener" aria-label="Instagram">{IG_ICON}</a><a href="{FB_URL}" target="_blank" rel="noopener" aria-label="Facebook">{FB_ICON}</a></div>
-            <a class="btn menusub" href="https://brenhameveryday.beehiiv.com/subscribe" target="_blank" rel="noopener">Get it every Wednesday</a>
+            <a class="btn menusub" href="https://brenhameveryday.beehiiv.com/subscribe" target="_blank" rel="noopener">Get it every Tuesday night</a>
           </div>
         </details>
       </nav>
@@ -151,7 +151,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
 {body}
   <footer>
     <h2>Never miss <span class="s">a weekend</span></h2>
-    {'' if slim else '<p class="footsub"><a href="' + prefix + 'subscribe/">Get it in your inbox every Wednesday</a></p>'}
+    {'' if slim else '<p class="footsub"><a href="' + prefix + 'subscribe/">Get it in your inbox every Tuesday night</a></p>'}
     <div class="follow">
       <h3>Follow along</h3>
       <div class="follow-row"><a class="btn ghost" href="https://www.instagram.com/brenhameveryday/" target="_blank" rel="noopener">{IG_ICON}Instagram</a><a class="btn ghost" href="{FB_URL}" target="_blank" rel="noopener">{FB_ICON}Facebook</a></div>
@@ -356,15 +356,15 @@ def build_subscribe(issues):
     head = ('<p class="kicker">Free for subscribers</p><h2>Get the Brenham Holiday Guide</h2>'
             '<p class="lede">Every Thanksgiving order deadline, Christmas book-it-now date, plus Christmas break and New Year&rsquo;s, on three printable pages. Sign up and it lands in your inbox right away.</p>'
             if gift else
-            '<h2>Get the weekend guide <span class="s">every Wednesday</span></h2>')
+            '<h2>Get the weekend guide <span class="s">every Tuesday night</span></h2>')
     body = ('<section class="subpage">' + head +
             bhform(SUB_URL) +
-            '<p class="subnote"><b>Every Wednesday:</b> the best family things to do in and around Brenham, plus a few just for the grown-ups. One email a week.</p>'
+            '<p class="subnote"><b>Every Tuesday night:</b> the best family things to do in and around Brenham, plus a few just for the grown-ups. One email a week.</p>'
             '<p class="subnote small">Like a friend who knows what&rsquo;s going on&hellip; for the most part.</p>'
             '<p class="subnote small"><a href="../index.html">See this weekend&rsquo;s guide</a></p></section>')
     os.makedirs(os.path.join(OUT, "subscribe"))
     open(os.path.join(OUT, "subscribe", "index.html"), "w", encoding="utf-8").write(
-        page("Sign up for Brenham Every Day", "Get the Brenham Holiday Guide plus the best family things to do every Wednesday.", "../", body, issues, slim=True))
+        page("Sign up for Brenham Every Day", "Get the Brenham Holiday Guide plus the best family things to do every Tuesday night.", "../", body, issues, slim=True))
 
 
 def build_guides(issues):
