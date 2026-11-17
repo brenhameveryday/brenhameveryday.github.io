@@ -1,6 +1,7 @@
 """Once-per-visitor signup nudge (approved by Caroline 2026-11-17).
 Phones: small bar slides up after 50% scroll. Computers: exit intent.
-Skipped while a signup box is on screen; 30-day snooze once shown (localStorage in try/catch)."""
+Skipped while a signup box is on screen. Shows once per browser session; closing it snoozes 30 days.
+?popup=test forces it to show (for checking)."""
 
 POPUP_FORM_ID = "9db22e13-0393-4787-a946-6d2b13077c43"   # beehiiv "Website pop-up (Holiday Guide)", button "Send it to me"
 WEEKLY_FORM_ID = "9bd79a0c-a3ea-40ff-a7f8-a820b5fc88b1"  # main site form, used after New Year's
@@ -8,7 +9,12 @@ WEEKLY_FORM_ID = "9bd79a0c-a3ea-40ff-a7f8-a820b5fc88b1"  # main site form, used 
 JS = """<script>(function () {
   var KEY = "bed_nudge", DAYS = 30, el = document.getElementById("nudge"), done = false;
   if (!el) return;
-  function snoozed() { try { var t = +localStorage.getItem(KEY); return t && (Date.now() - t) < DAYS * 864e5; } catch (e) { return false; } }
+  var test = /[?&]popup=test/.test(location.search);
+  function snoozed() {
+    if (test) return false;
+    try { if (sessionStorage.getItem(KEY)) return true; } catch (e) {}
+    try { var t = +localStorage.getItem(KEY); return t && (Date.now() - t) < DAYS * 864e5; } catch (e) { return false; }
+  }
   function snooze() { try { localStorage.setItem(KEY, String(Date.now())); } catch (e) {} }
   function boxOnScreen() {
     var boxes = document.querySelectorAll(".signup, .subpage");
@@ -17,11 +23,13 @@ JS = """<script>(function () {
   }
   function show() {
     if (done || snoozed() || boxOnScreen()) return;
-    done = true; snooze(); el.classList.add("on");
+    done = true; el.classList.add("on");
+    try { sessionStorage.setItem(KEY, "1"); } catch (e) {}
   }
-  function hide() { el.classList.remove("on"); }
+  function hide() { el.classList.remove("on"); snooze(); }
   el.querySelector(".nudge-x").addEventListener("click", hide);
   el.querySelector(".nudge-btn").addEventListener("click", function () { setTimeout(hide, 400); });
+  if (test) { setTimeout(show, 600); return; }
   if (snoozed()) return;
   if (matchMedia("(pointer: coarse)").matches) {
     addEventListener("scroll", function () {
