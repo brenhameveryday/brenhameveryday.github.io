@@ -13,6 +13,7 @@ import datetime, html, json, os, re, shutil, sys
 
 from scene import scene
 from sleigh import sleigh_svg
+from popup import popup_html
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(ROOT, "public")
@@ -105,7 +106,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&family=Sacramento&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
-<link rel="stylesheet" href="{prefix}style.css?v=20261115b">
+<link rel="stylesheet" href="{prefix}style.css?v=20261117a">
 <script type="text/javascript" async src="https://subscribe-forms.beehiiv.com/attribution.js"></script>
 </head>
 <body{' class="slim"' if slim else ''}>
@@ -268,6 +269,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
 <script>(function () {{ var t = new Intl.DateTimeFormat("en-CA", {{ timeZone: "America/Chicago" }}).format(new Date()); if (t > "{TDAY_END}") document.querySelectorAll(".special.tday, .tday-link").forEach(function (a) {{ a.remove(); }}); }})();</script>
 <script>document.addEventListener("click", function (e) {{ var m = document.querySelector(".menu"); if (m && m.open && !m.contains(e.target)) m.open = false; }});</script>
 <script>window.goatcounter = {{ path: function () {{ return location.pathname.replace(/index\\.html$/, "").replace(/([^/])$/, "$1/"); }}, referrer: function () {{ return /[?&]_bhlid=/.test(location.search) ? "Email (beehiiv)" : document.referrer; }} }};</script>
+{'' if slim else popup_html(TODAY)}
 <script>setTimeout(function () {{ document.querySelectorAll(".bhform").forEach(function (f) {{ if (!f.querySelector("iframe")) f.classList.add("nofrm"); }}); }}, 6000);</script>
 <script data-goatcounter="https://brenhameveryday.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
