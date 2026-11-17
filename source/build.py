@@ -106,7 +106,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&family=Sacramento&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
-<link rel="stylesheet" href="{prefix}style.css?v=20261117b">
+<link rel="stylesheet" href="{prefix}style.css?v=20261117c">
 <script type="text/javascript" async src="https://subscribe-forms.beehiiv.com/attribution.js"></script>
 </head>
 <body{' class="slim"' if slim else ''}>
@@ -147,19 +147,11 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
   {'' if slim else '<div class="scene">' + scene(pumpkins=pumpkins and not thanks, spooky=spooky, christmas=christmas, thanks=thanks) + '</div>'}
 </div>
 <main class="wrap">
-  {'' if slim else TG_TOP if (thanks or christmas) else '''<div class="signup">
-    <h3>Get it in your inbox every Wednesday</h3>
-    ''' + bhform("https://brenhameveryday.beehiiv.com/subscribe") + '''
-    <small id="signupmsg">Like a friend who knows what's going on… for the most part. Every Wednesday.</small>
-  </div>'''}
+  <!-- inline signup boxes removed 2026-11-17 (Caroline: pop-up only) -->
 {body}
   <footer>
     <h2>Never miss <span class="s">a weekend</span></h2>
-    {'' if slim else '''<div class="signup">
-      <h3>Want next weekend's guide in your inbox?</h3>
-      <a class="btn" href="https://brenhameveryday.beehiiv.com/subscribe" target="_blank" rel="noopener">Sign me up</a>
-      <small>Like a friend who knows what's going on… for the most part. Every Wednesday.</small>
-    </div>'''}
+    {'' if slim else '<p class="footsub"><a href="' + prefix + 'subscribe/">Get it in your inbox every Wednesday</a></p>'}
     <div class="follow">
       <h3>Follow along</h3>
       <div class="follow-row"><a class="btn ghost" href="https://www.instagram.com/brenhameveryday/" target="_blank" rel="noopener">{IG_ICON}Instagram</a><a class="btn ghost" href="{FB_URL}" target="_blank" rel="noopener">{FB_ICON}Facebook</a></div>
