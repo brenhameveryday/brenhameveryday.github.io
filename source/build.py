@@ -51,6 +51,15 @@ def bhform(href, label="Sign me up"):
             f'<a class="btn bhfallback" href="{href}" target="_blank" rel="noopener">{label}</a></div>')
 
 
+def footer_signup():
+    gift = TODAY <= "2027-01-01"
+    small = ("Plus the free Brenham Holiday Guide, sent right away." if gift
+             else "Like a friend who knows what&rsquo;s going on&hellip; for the most part.")
+    return ('<div class="signup"><h3>Get it in your inbox every Tuesday night</h3>'
+            + bhform("https://brenhameveryday.beehiiv.com/subscribe?utm_source=footer")
+            + '<small>' + small + '</small></div>')
+
+
 TG_TOP = '''<div class="signup tgsign">
     <h3>Get the free Brenham Holiday Guide</h3>
     ''' + bhform("https://brenhameveryday.beehiiv.com/subscribe?utm_source=holiday-guide", "Send me the holiday guide") + '''
@@ -151,7 +160,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
 {body}
   <footer>
     <h2>Never miss <span class="s">a weekend</span></h2>
-    {'' if slim else '<p class="footsub"><a href="' + prefix + 'subscribe/">Get it in your inbox every Tuesday night</a></p>'}
+    {'' if slim else footer_signup()}
     <div class="follow">
       <h3>Follow along</h3>
       <div class="follow-row"><a class="btn ghost" href="https://www.instagram.com/brenhameveryday/" target="_blank" rel="noopener">{IG_ICON}Instagram</a><a class="btn ghost" href="{FB_URL}" target="_blank" rel="noopener">{FB_ICON}Facebook</a></div>

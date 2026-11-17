@@ -343,7 +343,7 @@
 
   <footer>
     <h2>Never miss <span class="s">a weekend</span></h2>
-    <p class="footsub"><a href="../subscribe/">Get it in your inbox every Tuesday night</a></p>
+    <div class="signup"><h3>Get it in your inbox every Tuesday night</h3><div class="bhform"><script async src="https://subscribe-forms.beehiiv.com/v3/loader.js" data-beehiiv-form="9bd79a0c-a3ea-40ff-a7f8-a820b5fc88b1"></script><a class="btn bhfallback" href="https://brenhameveryday.beehiiv.com/subscribe?utm_source=footer" target="_blank" rel="noopener">Sign me up</a></div><small>Plus the free Brenham Holiday Guide, sent right away.</small></div>
     <div class="follow">
       <h3>Follow along</h3>
       <div class="follow-row"><a class="btn ghost" href="https://www.instagram.com/brenhameveryday/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>Instagram</a><a class="btn ghost" href="https://www.facebook.com/share/19rUeAqB4Z/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M15 8h-1.5A1.5 1.5 0 0 0 12 9.5V21M9.5 13H15" stroke-linecap="round"/></svg>Facebook</a></div>
@@ -456,7 +456,12 @@
 <div class="nudge" id="nudge" role="dialog" aria-label="Get the free Brenham Holiday Guide"><button class="nudge-x" type="button" aria-label="Close">&times;</button><p class="nudge-h">Get the free Brenham Holiday Guide</p><p class="nudge-s">Every deadline and date for Thanksgiving through New Year&rsquo;s, in your inbox right away.</p><div class="bhform"><script async src="https://subscribe-forms.beehiiv.com/v3/loader.js" data-beehiiv-form="9db22e13-0393-4787-a946-6d2b13077c43"></script><a class="btn bhfallback nudge-btn" href="https://brenhameveryday.beehiiv.com/subscribe?utm_source=popup" target="_blank" rel="noopener">Send it to me</a></div></div><script>(function () {
   var KEY = "bed_nudge", DAYS = 30, el = document.getElementById("nudge"), done = false;
   if (!el) return;
-  function snoozed() { try { var t = +localStorage.getItem(KEY); return t && (Date.now() - t) < DAYS * 864e5; } catch (e) { return false; } }
+  var test = /[?&]popup=test/.test(location.search);
+  function snoozed() {
+    if (test) return false;
+    try { if (sessionStorage.getItem(KEY)) return true; } catch (e) {}
+    try { var t = +localStorage.getItem(KEY); return t && (Date.now() - t) < DAYS * 864e5; } catch (e) { return false; }
+  }
   function snooze() { try { localStorage.setItem(KEY, String(Date.now())); } catch (e) {} }
   function boxOnScreen() {
     var boxes = document.querySelectorAll(".signup, .subpage");
@@ -465,11 +470,13 @@
   }
   function show() {
     if (done || snoozed() || boxOnScreen()) return;
-    done = true; snooze(); el.classList.add("on");
+    done = true; el.classList.add("on");
+    try { sessionStorage.setItem(KEY, "1"); } catch (e) {}
   }
-  function hide() { el.classList.remove("on"); }
+  function hide() { el.classList.remove("on"); snooze(); }
   el.querySelector(".nudge-x").addEventListener("click", hide);
   el.querySelector(".nudge-btn").addEventListener("click", function () { setTimeout(hide, 400); });
+  if (test) { setTimeout(show, 600); return; }
   if (snoozed()) return;
   if (matchMedia("(pointer: coarse)").matches) {
     addEventListener("scroll", function () {
