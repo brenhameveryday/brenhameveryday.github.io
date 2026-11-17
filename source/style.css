@@ -260,3 +260,37 @@ main h2.dayh, main h2#ahead, main h2#give { scroll-margin-top: 130px; }
 .topsocial { gap: 4px; margin-right: -10px; }
 .topsocial a { padding: 10px; }
 @media (max-width: 380px) { .topbar nav { gap: 8px; } .topbar .special, .menu > summary { padding: 7px 10px; font-size: 14px; } }
+
+/* /subscribe page (2026-11-15) */
+.subpage { max-width: 34rem; margin: 28px auto 8px; background: var(--pink-soft); border-radius: 18px; padding: 24px 22px; text-align: center; }
+.subpage .kicker { margin: 0; font: 800 12px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; color: var(--denim-ink); }
+.subpage h2 { margin: 10px 0 8px; }
+.subpage .lede { margin: 0 0 18px; }
+.subpage .subbtn { font-size: 18px; padding: 15px 26px; }
+.subpage .subnote { margin: 16px 0 0; }
+.subpage .subnote.small { font-size: 15px; color: var(--muted); margin-top: 8px; }
+body.slim .mast .sub, body.slim .topbar .special { display: none; }
+body.slim header.mast { padding-block: 16px 20px; }
+body.slim .logo .s { font-size: 36px; } body.slim .logo .b { font-size: 44px; }
+body.slim .subpage { margin-top: 20px; }
+
+/* beehiiv type-your-email form; plain button only if the form fails to load */
+.bhform { width: 100%; }
+.bhform iframe { width: 100% !important; max-width: 100%; }
+.bhfallback { display: none; }
+.bhform.nofrm .bhfallback { display: inline-block; }
+
+/* Signup nudge: small bottom bar on phones, corner card on computers */
+.nudge { position: fixed; z-index: 50; left: 12px; right: 12px; bottom: 12px; background: var(--pink-soft); color: var(--ink);
+  border: 2px solid var(--denim); border-radius: 14px; padding: 14px 44px 14px 16px; display: grid; gap: 6px;
+  box-shadow: 0 6px 20px rgba(31,45,77,.18); transform: translateY(140%); visibility: hidden; transition: transform .3s ease, visibility 0s .3s; }
+.nudge.on { transform: none; visibility: visible; transition: transform .3s ease; }
+.nudge-h { margin: 0; font: 800 16px/1.25 var(--display); color: var(--ink); }
+.nudge-s { margin: 0; font-size: 14px; line-height: 1.4; color: var(--muted); }
+.nudge .bhform { margin-top: 4px; }
+.nudge.on .bhform.nofrm .bhfallback { display: inline-block; }
+.nudge-x { position: absolute; top: 4px; right: 4px; width: 40px; height: 40px; border: 0; background: none;
+  font: 400 28px/1 var(--display); color: var(--ink); cursor: pointer; }
+@media (min-width: 700px) { .nudge { left: auto; right: 24px; bottom: 24px; width: 340px; } }
+@media (prefers-reduced-motion: reduce) { .nudge { transition: none; } }
+.footsub { margin: 4px 0 20px; font: 700 16px/1.4 var(--display); }

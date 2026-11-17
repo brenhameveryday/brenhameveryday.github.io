@@ -13,6 +13,7 @@ import datetime, html, json, os, re, shutil, sys
 
 from scene import scene
 from sleigh import sleigh_svg
+from popup import popup_html
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(ROOT, "public")
@@ -41,17 +42,26 @@ def load_issues():
     return issues
 
 
+BH_FORM_ID = "9bd79a0c-a3ea-40ff-a7f8-a820b5fc88b1"  # beehiiv inline form "Website signup (brenhameveryday.com)"
+
+
+def bhform(href, label="Sign me up"):
+    """Type-your-email box (beehiiv embed). If it hasn't loaded after 6s, the plain button shows instead."""
+    return (f'<div class="bhform"><script async src="https://subscribe-forms.beehiiv.com/v3/loader.js" data-beehiiv-form="{BH_FORM_ID}"></script>'
+            f'<a class="btn bhfallback" href="{href}" target="_blank" rel="noopener">{label}</a></div>')
+
+
 TG_TOP = '''<div class="signup tgsign">
-    <h3>Get the Thanksgiving-week plan in your inbox</h3>
-    <a class="btn" href="https://brenhameveryday.beehiiv.com/subscribe?utm_source=thanksgiving-page" target="_blank" rel="noopener">Sign me up</a>
-    <small>It lands Tuesday night, Nov 24, in time to plan the whole long weekend. Then the weekend guide every week after.</small>
+    <h3>Get the free Brenham Holiday Guide</h3>
+    ''' + bhform("https://brenhameveryday.beehiiv.com/subscribe?utm_source=holiday-guide", "Send me the holiday guide") + '''
+    <small>Every Thanksgiving order deadline, Christmas book-it-now date, plus Christmas break and New Year&rsquo;s, on three printable pages. Free for subscribers, it lands in your inbox right away.</small>
   </div>'''
 SHOW_SPOTLIGHTS = True
 TODAY = datetime.date.today().isoformat()
 TDAY_END = "2026-11-30"  # Thanksgiving nav button retires after this day
 
 
-def page(title, description, prefix, body, issues, current=None, preview=False, pumpkins=False, spooky=False, christmas=False, thanks=False, guides=False, og_img=None):
+def page(title, description, prefix, body, issues, current=None, preview=False, pumpkins=False, spooky=False, christmas=False, thanks=False, guides=False, og_img=None, slim=False):
     """prefix is the relative path back to the site root ("" or "../")."""
     opts = []
     newest_pub = issues_published(issues)[-1]
@@ -96,9 +106,10 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&family=Sacramento&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
-<link rel="stylesheet" href="{prefix}style.css?v=20261114h">
+<link rel="stylesheet" href="{prefix}style.css?v=20261117c">
+<script type="text/javascript" async src="https://subscribe-forms.beehiiv.com/attribution.js"></script>
 </head>
-<body>
+<body{' class="slim"' if slim else ''}>
 {FOOT_SYMBOL}
 {banner}
 <div class="band">
@@ -133,22 +144,14 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
       {issue_line}
     </header>
   </div>
-  <div class="scene">{scene(pumpkins=pumpkins and not thanks, spooky=spooky, christmas=christmas, thanks=thanks)}</div>
+  {'' if slim else '<div class="scene">' + scene(pumpkins=pumpkins and not thanks, spooky=spooky, christmas=christmas, thanks=thanks) + '</div>'}
 </div>
 <main class="wrap">
-  {TG_TOP if thanks else '''<div class="signup">
-    <h3>Get it in your inbox every Tuesday night</h3>
-    <a class="btn" href="https://brenhameveryday.beehiiv.com/subscribe" target="_blank" rel="noopener">Sign me up</a>
-    <small id="signupmsg">Like a friend who knows what's going on… for the most part. Every Tuesday night.</small>
-  </div>'''}
+  <!-- inline signup boxes removed 2026-11-17 (Caroline: pop-up only) -->
 {body}
   <footer>
     <h2>Never miss <span class="s">a weekend</span></h2>
-    {TG_TOP if thanks else '''<div class="signup">
-      <h3>Want next weekend's guide in your inbox?</h3>
-      <a class="btn" href="https://brenhameveryday.beehiiv.com/subscribe" target="_blank" rel="noopener">Sign me up</a>
-      <small>Like a friend who knows what's going on… for the most part. Every Tuesday night.</small>
-    </div>'''}
+    {'' if slim else '<p class="footsub"><a href="' + prefix + 'subscribe/">Get it in your inbox every Tuesday night</a></p>'}
     <div class="follow">
       <h3>Follow along</h3>
       <div class="follow-row"><a class="btn ghost" href="https://www.instagram.com/brenhameveryday/" target="_blank" rel="noopener">{IG_ICON}Instagram</a><a class="btn ghost" href="{FB_URL}" target="_blank" rel="noopener">{FB_ICON}Facebook</a></div>
@@ -258,6 +261,8 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
 <script>(function () {{ var t = new Intl.DateTimeFormat("en-CA", {{ timeZone: "America/Chicago" }}).format(new Date()); if (t > "{TDAY_END}") document.querySelectorAll(".special.tday, .tday-link").forEach(function (a) {{ a.remove(); }}); }})();</script>
 <script>document.addEventListener("click", function (e) {{ var m = document.querySelector(".menu"); if (m && m.open && !m.contains(e.target)) m.open = false; }});</script>
 <script>window.goatcounter = {{ path: function () {{ return location.pathname.replace(/index\\.html$/, "").replace(/([^/])$/, "$1/"); }}, referrer: function () {{ return /[?&]_bhlid=/.test(location.search) ? "Email (beehiiv)" : document.referrer; }} }};</script>
+{'' if slim else popup_html(TODAY)}
+<script>setTimeout(function () {{ document.querySelectorAll(".bhform").forEach(function (f) {{ if (!f.querySelector("iframe")) f.classList.add("nofrm"); }}); }}, 6000);</script>
 <script data-goatcounter="https://brenhameveryday.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
@@ -330,6 +335,7 @@ def main():
         '<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=../eat-with-kids/"><link rel="canonical" href="../eat-with-kids/">')
     build_spotlights(issues)
     build_guides(issues)
+    build_subscribe(issues)
     print("built", [i["slug"] + (" (draft)" if i["draft"] else "") for i in issues], "newest:", newest["slug"])
 
 
@@ -339,6 +345,26 @@ GUIDES = [
     ("thanksgiving/index.html", "fall", "Thanksgiving in Brenham", "Pie and meal pre-orders, things to do over Thanksgiving break, and ways to give back."),
     ("spotlights/index.html", "spot", "Local spotlights", "Small farms, makers and businesses around Brenham worth knowing."),
 ]
+
+
+SUB_URL = "https://brenhameveryday.beehiiv.com/subscribe?utm_source=subscribe-page"
+
+
+def build_subscribe(issues):
+    """/subscribe: one-box signup page for bio links, DMs and Story stickers. Gift line runs through New Year's."""
+    gift = TODAY <= "2027-01-01"
+    head = ('<p class="kicker">Free for subscribers</p><h2>Get the Brenham Holiday Guide</h2>'
+            '<p class="lede">Every Thanksgiving order deadline, Christmas book-it-now date, plus Christmas break and New Year&rsquo;s, on three printable pages. Sign up and it lands in your inbox right away.</p>'
+            if gift else
+            '<h2>Get the weekend guide <span class="s">every Tuesday night</span></h2>')
+    body = ('<section class="subpage">' + head +
+            bhform(SUB_URL) +
+            '<p class="subnote"><b>Every Tuesday night:</b> the best family things to do in and around Brenham, plus a few just for the grown-ups. One email a week.</p>'
+            '<p class="subnote small">Like a friend who knows what&rsquo;s going on&hellip; for the most part.</p>'
+            '<p class="subnote small"><a href="../index.html">See this weekend&rsquo;s guide</a></p></section>')
+    os.makedirs(os.path.join(OUT, "subscribe"))
+    open(os.path.join(OUT, "subscribe", "index.html"), "w", encoding="utf-8").write(
+        page("Sign up for Brenham Every Day", "Get the Brenham Holiday Guide plus the best family things to do every Tuesday night.", "../", body, issues, slim=True))
 
 
 def build_guides(issues):
