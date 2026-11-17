@@ -156,7 +156,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
   {'' if slim else '<div class="scene">' + scene(pumpkins=pumpkins and not thanks, spooky=spooky, christmas=christmas, thanks=thanks) + '</div>'}
 </div>
 <main class="wrap">
-  <!-- inline signup boxes removed 2026-11-17 (Caroline: pop-up only) -->
+  {TG_TOP if (thanks or christmas) and not slim else ''}
 {body}
   <footer>
     <h2>Never miss <span class="s">a weekend</span></h2>
