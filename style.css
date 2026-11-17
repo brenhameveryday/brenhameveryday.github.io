@@ -279,3 +279,17 @@ body.slim .subpage { margin-top: 20px; }
 .bhform iframe { width: 100% !important; max-width: 100%; }
 .bhfallback { display: none; }
 .bhform.nofrm .bhfallback { display: inline-block; }
+
+/* Signup nudge: small bottom bar on phones, corner card on computers */
+.nudge { position: fixed; z-index: 50; left: 12px; right: 12px; bottom: 12px; background: var(--pink-soft); color: var(--ink);
+  border: 2px solid var(--denim); border-radius: 14px; padding: 14px 44px 14px 16px; display: grid; gap: 6px;
+  box-shadow: 0 6px 20px rgba(31,45,77,.18); transform: translateY(140%); visibility: hidden; transition: transform .3s ease, visibility 0s .3s; }
+.nudge.on { transform: none; visibility: visible; transition: transform .3s ease; }
+.nudge-h { margin: 0; font: 800 16px/1.25 var(--display); color: var(--ink); }
+.nudge-s { margin: 0; font-size: 14px; line-height: 1.4; color: var(--muted); }
+.nudge .bhform { margin-top: 4px; }
+.nudge.on .bhform.nofrm .bhfallback { display: inline-block; }
+.nudge-x { position: absolute; top: 4px; right: 4px; width: 40px; height: 40px; border: 0; background: none;
+  font: 400 28px/1 var(--display); color: var(--ink); cursor: pointer; }
+@media (min-width: 700px) { .nudge { left: auto; right: 24px; bottom: 24px; width: 340px; } }
+@media (prefers-reduced-motion: reduce) { .nudge { transition: none; } }
