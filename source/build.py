@@ -326,6 +326,10 @@ def main():
     os.makedirs(os.path.join(OUT, "eat-with-kids"))
     open(os.path.join(OUT, "eat-with-kids", "index.html"), "w", encoding="utf-8").write(
         page("Where to Eat with Kids", "The most family-friendly spots around Brenham, checked by real parents.", "../", eat, issues))
+    ew = open(os.path.join(ROOT, "every-week.html"), encoding="utf-8").read()
+    os.makedirs(os.path.join(OUT, "every-week"))
+    open(os.path.join(OUT, "every-week", "index.html"), "w", encoding="utf-8").write(
+        page("Every Week in Brenham", "The regulars: storytimes, game nights and live music that happen every week in Brenham, TX.", "../", ew, issues))
     contact = open(os.path.join(ROOT, "contact.html"), encoding="utf-8").read()
     os.makedirs(os.path.join(OUT, "contact"))
     open(os.path.join(OUT, "contact", "index.html"), "w", encoding="utf-8").write(
