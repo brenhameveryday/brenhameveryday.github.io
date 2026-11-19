@@ -135,6 +135,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
           <div class="menudrop">
             <a href="{prefix}index.html">This weekend</a>
             <details class="wkmenu"><summary>Past weekends</summary><div class="wkdrop">{''.join(opts)}</div></details>
+            <a href="{prefix}every-week/index.html">Every week in Brenham</a>
             <a href="{prefix}christmas/index.html">Christmas in Brenham</a>
             {'' if TODAY > TDAY_END else f'<a class="tday-link" href="{prefix}thanksgiving/index.html">Thanksgiving in Brenham</a>'}
             <a href="{prefix}guides/index.html"{' aria-current="page"' if guides else ''}>Guides</a>
