@@ -112,7 +112,7 @@ def page(title, description, prefix, body, issues, current=None, preview=False, 
 <meta property="og:image" content="https://brenhameveryday.com/img/{og_img or ('share-thanksgiving.png?v=2' if thanks else 'share-christmas.png?v=1' if christmas else 'share.png')}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Brenham Every Day: the Brenham water tower, courthouse and Main Street">
+<meta property="og:image:alt" content="{'The free Brenham Holiday Guide: every Thanksgiving and Christmas deadline on printable pages' if og_img and 'holiday-guide' in og_img else 'Brenham Every Day: the Brenham water tower, courthouse and Main Street'}">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -380,7 +380,7 @@ def build_subscribe(issues):
             '<p class="subnote small"><a href="../index.html">See this weekend&rsquo;s guide</a></p></section>')
     os.makedirs(os.path.join(OUT, "subscribe"))
     open(os.path.join(OUT, "subscribe", "index.html"), "w", encoding="utf-8").write(
-        page("Sign up for Brenham Every Day", "Get the Brenham Holiday Guide plus the best family things to do every Tuesday night.", "../", body, issues, slim=True))
+        page("Free Brenham Holiday Guide" if gift else "Sign up for Brenham Every Day", "Every Thanksgiving order deadline and Christmas book-it-now date on three printable pages. Free for subscribers." if gift else "The best family things to do in and around Brenham, every Tuesday night.", "../", body, issues, og_img=("share-holiday-guide.jpg?v=1" if gift else None), slim=True))
 
 
 def build_guides(issues):
