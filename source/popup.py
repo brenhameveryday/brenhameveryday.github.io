@@ -31,6 +31,7 @@ JS = """<script>(function () {
   el.querySelector(".nudge-btn").addEventListener("click", function () { setTimeout(hide, 400); });
   if (test) { setTimeout(show, 600); return; }
   if (snoozed()) return;
+  setTimeout(show, 10000);  // ~10s in, or the triggers below, whichever comes first
   if (matchMedia("(pointer: coarse)").matches) {
     addEventListener("scroll", function () {
       var h = document.documentElement.scrollHeight - innerHeight;
@@ -44,10 +45,9 @@ JS = """<script>(function () {
 
 def popup_html(today):
     gift = today <= "2027-01-01"
-    head = "Get the free Brenham Holiday Guide" if gift else "Get the weekend guide every Tuesday night"
-    sub = ("Every deadline and date for Thanksgiving through New Year&rsquo;s, in your inbox right away."
-           if gift else "The best family things to do in and around Brenham. One email a week.")
-    btn = "Send it to me" if gift else "Sign me up"
+    head = "Get our weekly Brenham email (+ a free Holiday Guide)" if gift else "Get our weekly Brenham email"
+    sub = "The best family things to do in and around Brenham, every Tuesday night."
+    btn = "Sign me up"
     return ('<div class="nudge" id="nudge" role="dialog" aria-label="' + head + '">'
             '<button class="nudge-x" type="button" aria-label="Close">&times;</button>'
             '<p class="nudge-h">' + head + '</p><p class="nudge-s">' + sub + '</p>'
