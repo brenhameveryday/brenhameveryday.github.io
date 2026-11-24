@@ -219,7 +219,7 @@
 <script>(function () { var t = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Chicago" }).format(new Date()); if (t > "2026-11-30") document.querySelectorAll(".special.tday, .tday-link").forEach(function (a) { a.remove(); }); })();</script>
 <script>document.addEventListener("click", function (e) { var m = document.querySelector(".menu"); if (m && m.open && !m.contains(e.target)) m.open = false; });</script>
 <script>window.goatcounter = { path: function () { return location.pathname.replace(/index\.html$/, "").replace(/([^/])$/, "$1/"); }, referrer: function () { return /[?&]_bhlid=/.test(location.search) ? "Email (beehiiv)" : document.referrer; } };</script>
-<div class="nudge" id="nudge" role="dialog" aria-label="Get the free Brenham Holiday Guide"><button class="nudge-x" type="button" aria-label="Close">&times;</button><p class="nudge-h">Get the free Brenham Holiday Guide</p><p class="nudge-s">Every deadline and date for Thanksgiving through New Year&rsquo;s, in your inbox right away.</p><div class="bhform"><script async src="https://subscribe-forms.beehiiv.com/v3/loader.js" data-beehiiv-form="9db22e13-0393-4787-a946-6d2b13077c43"></script><a class="btn bhfallback nudge-btn" href="https://brenhameveryday.beehiiv.com/subscribe?utm_source=popup" target="_blank" rel="noopener">Send it to me</a></div></div><script>(function () {
+<div class="nudge" id="nudge" role="dialog" aria-label="Get our weekly Brenham email (+ a free Holiday Guide)"><button class="nudge-x" type="button" aria-label="Close">&times;</button><p class="nudge-h">Get our weekly Brenham email (+ a free Holiday Guide)</p><p class="nudge-s">The best family things to do in and around Brenham, every Tuesday night.</p><div class="bhform"><script async src="https://subscribe-forms.beehiiv.com/v3/loader.js" data-beehiiv-form="9db22e13-0393-4787-a946-6d2b13077c43"></script><a class="btn bhfallback nudge-btn" href="https://brenhameveryday.beehiiv.com/subscribe?utm_source=popup" target="_blank" rel="noopener">Sign me up</a></div></div><script>(function () {
   var KEY = "bed_nudge", DAYS = 30, el = document.getElementById("nudge"), done = false;
   if (!el) return;
   var test = /[?&]popup=test/.test(location.search);
@@ -244,6 +244,7 @@
   el.querySelector(".nudge-btn").addEventListener("click", function () { setTimeout(hide, 400); });
   if (test) { setTimeout(show, 600); return; }
   if (snoozed()) return;
+  setTimeout(show, 10000);  // ~10s in, or the triggers below, whichever comes first
   if (matchMedia("(pointer: coarse)").matches) {
     addEventListener("scroll", function () {
       var h = document.documentElement.scrollHeight - innerHeight;
